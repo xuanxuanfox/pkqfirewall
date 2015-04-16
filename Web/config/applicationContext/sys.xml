@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd" default-lazy-init="true">
+	<!-- 系统级服务 BEGIN-->
+	<bean id="LoginInterceptor" class="com.alnie.tc.system.interceptor.LoginInterceptor" scope="prototype">
+	</bean>
+	<bean id="AjaxLoginInterceptor" class="com.alnie.tc.system.interceptor.AjaxLoginInterceptor" scope="prototype">
+	</bean>
+	<bean id="ExceptionInterceptor" class="com.alnie.tc.system.interceptor.ExceptionInterceptor" scope="prototype">
+	</bean>
+	<bean id="AjaxExceptionInterceptor" class="com.alnie.tc.system.interceptor.AjaxExceptionInterceptor" scope="prototype">
+	</bean>
+	<bean id="LoginAction" class="com.alnie.tc.action.LoginAction" scope="prototype">
+		<property name="service" ref="loginService" />
+	</bean>
+	<bean id="loginService" class="com.alnie.tc.service.LoginService">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	<bean id="SystemAction" class="com.alnie.tc.action.SystemAction" scope="prototype">
+		<property name="service" ref="systemService" />
+	</bean>
+	<bean id="systemService" class="com.alnie.tc.service.SystemService">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+</beans>

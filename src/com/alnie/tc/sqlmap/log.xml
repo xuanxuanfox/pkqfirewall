@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap namespace="log">
+    	<select id="loginList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select if(t.trans_result=1,'成功','失败') as trans_result_desc,t.trans_result,t.trans_details,date_format(t.trans_time,'%Y-%m-%d %H:%i:%s') as trans_time,e.operator_realname from sys_login_logs t,sys_operator e where t.operator_id=e.operator_id and t.trans_type=0
+			<isNotEmpty prepend=" AND " property="operator_realname">  
+	            e.operator_realname=#operator_realname#
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="start_trans_time">  
+	            <![CDATA[ date_format(t.trans_time,'%Y-%m-%d')>=#start_trans_time# ]]>
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="end_trans_time">  
+				<![CDATA[ date_format(t.trans_time,'%Y-%m-%d')<=#end_trans_time# ]]>
+			</isNotEmpty>  
+		    order by t.trans_time desc limit #start_row#,#end_row#
+    	</select>
+    	<select id="loginTotal" parameterClass="java.util.HashMap" resultClass="int">
+    		select count(1) from sys_login_logs t,sys_operator e where t.operator_id=e.operator_id and t.trans_type=0
+    		<isNotEmpty prepend=" AND " property="operator_realname">  
+	            e.operator_realname=#operator_realname#
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="start_trans_time">  
+	            <![CDATA[ date_format(t.trans_time,'%Y-%m-%d')>=#start_trans_time# ]]>
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="end_trans_time">  
+				<![CDATA[ date_format(t.trans_time,'%Y-%m-%d')<=#end_trans_time# ]]>
+			</isNotEmpty>  
+    	</select>
+    	
+    	<select id="list" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.trans_type,if(t.trans_result=1,'成功','失败') as trans_result_desc,t.trans_sub_type,t.trans_result,t.trans_details,
+    		s.config_value as trans_type_desc,date_format(t.trans_time,'%Y-%m-%d %H:%i:%s') as trans_time,e.operator_realname 
+    		from sys_logs t,sys_operator e,sys_config s where t.trans_type=s.config_id and s.config_group_id=100004 and t.operator_id=e.operator_id
+			<isNotEmpty prepend=" AND " property="operator_realname">  
+	            e.operator_realname=#operator_realname#
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="start_trans_time">  
+	            <![CDATA[ date_format(t.trans_time,'%Y-%m-%d')>=#start_trans_time# ]]>
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="end_trans_time">  
+				<![CDATA[ date_format(t.trans_time,'%Y-%m-%d')<=#end_trans_time# ]]>
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="trans_result">  
+	            t.trans_result=#trans_result#
+			</isNotEmpty>
+			<isNotEmpty prepend=" AND " property="trans_type">  
+	            t.trans_type=#trans_type#
+			</isNotEmpty>  
+		    order by t.trans_time desc limit #start_row#,#end_row#
+    	</select>
+    	<select id="total" parameterClass="java.util.HashMap" resultClass="int">
+    		select count(1) from sys_logs t,sys_operator e,sys_config s where t.trans_type=s.config_id and s.config_group_id=100004 and t.operator_id=e.operator_id
+    		<isNotEmpty prepend=" AND " property="operator_realname">  
+	            e.operator_realname=#operator_realname#
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="start_trans_time">  
+	            <![CDATA[ date_format(t.trans_time,'%Y-%m-%d')>=#start_trans_time# ]]>
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="end_trans_time">  
+				<![CDATA[ date_format(t.trans_time,'%Y-%m-%d')<=#end_trans_time# ]]>
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="trans_result">  
+	            t.trans_result=#trans_result#
+			</isNotEmpty>
+			<isNotEmpty prepend=" AND " property="trans_type">  
+	            t.trans_type=#trans_type#
+			</isNotEmpty>  
+    	</select>
+    </sqlMap>

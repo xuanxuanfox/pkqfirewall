@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap namespace="checkbehavior">
+    	<select id="list" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.id,t.resourceip,t.checktype,date_format(t.checktime,'%Y-%m-%d %H:%i:%s') as checktime,e.config_value as checktype_desc from checkbehavior t,sys_config e where t.checktype=e.config_id and e.config_group_id=100002
+    		<isNotEmpty prepend=" AND " property="resourceip">  
+	            t.resourceip like '%$resourceip$%'     
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="checktype">  
+	            t.checktype=#checktype#
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="start_checktime">  
+	            <![CDATA[ date_format(t.checktime,'%Y-%m-%d')>=#start_checktime# ]]>
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="end_checktime">  
+				<![CDATA[ date_format(t.checktime,'%Y-%m-%d')<=#end_checktime# ]]>
+			</isNotEmpty>  
+		    order by t.checktime desc,t.resourceip limit #start_row#,#end_row#
+    	</select>
+    	<select id="total" parameterClass="java.util.HashMap" resultClass="int">
+    		select count(1) from checkbehavior t
+    		<dynamic prepend="WHERE">  
+		        <isNotEmpty prepend=" AND " property="resourceip">  
+		            t.resourceip like '%$resourceip$%'     
+				</isNotEmpty>  
+				<isNotEmpty prepend=" AND " property="checktype">  
+		            t.checktype=#checktype#
+				</isNotEmpty>  
+				<isNotEmpty prepend=" AND " property="start_checktime">  
+		            <![CDATA[ date_format(t.checktime,'%Y-%m-%d')>=#start_checktime# ]]>
+				</isNotEmpty>  
+				<isNotEmpty prepend=" AND " property="end_checktime">  
+					<![CDATA[ date_format(t.checktime,'%Y-%m-%d')<=#end_checktime# ]]>
+				</isNotEmpty>  
+		    </dynamic>  
+    	</select>
+    	<select id="det" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.id,t.resourceip,t.checktype,date_format(t.checktime,'%Y-%m-%d %H:%i:%s') as checktime,e.config_value as checktype_desc from checkbehavior t,sys_config e where t.checktype=e.config_id and e.config_group_id=100002 and id=#id#
+    	</select>
+    	<insert id="new" parameterClass="java.util.HashMap">
+    		insert into checkbehavior(id,resourceip,checktime,checktype)
+    		values(#id#,#resourceip#,date_format(#checktime#,'%Y-%m-%d %H:%i:%s'),#checktype#)
+    	</insert>
+    	<update id="mod" parameterClass="java.util.HashMap">
+			update checkbehavior set resourceip=#resourceip#,checktime=date_format(#checktime#,'%Y-%m-%d %H:%i:%s'),checktype=#checktype# where id=#id#
+		</update>
+		<delete id="del" parameterClass="java.util.HashMap">
+			delete from checkbehavior where id=#id#
+		</delete>
+		<select id="newCheck" parameterClass="java.util.HashMap" resultClass="int">
+    		select count(1) from checkbehavior where resourceip=#resourceip# and checktype=#checktype#
+    	</select>
+    	<select id="modCheck" parameterClass="java.util.HashMap" resultClass="int">
+    		<![CDATA[ 
+    			select count(1) from checkbehavior where resourceip=#resourceip# and checktype=#checktype# and id<>#id#
+    		]]>
+    	</select>
+    </sqlMap>

@@ -1,0 +1,103 @@
+  ##############################################################################
+ #                                                                            ##
+############################################################################## #
+#                                                                            # #
+#                    Policy file for Red Hat Linux                           # #
+#                                                                            ##
+##############################################################################
+
+  ##############################################################################
+ #                                                                            ##
+############################################################################## #
+#                                                                            # #
+# Global Variable Definitions                                                # #
+#                                                                            # #
+# These are defined at install time by the installation script.  You may     # #
+# Manually edit these if you are using this file directly and not from the   # #
+# installation script itself.                                                # #
+#                                                                            ##
+##############################################################################
+
+@@section GLOBAL
+TWDOCS="/opt/alsoc/tripwire/doc/tripwire";
+TWBIN="/opt/alsoc/tripwire/sbin";
+TWPOL="/opt/alsoc/tripwire/config";
+TWDB="/opt/alsoc/tripwire/lib/tripwire";
+TWSKEY="/opt/alsoc/tripwire/config";
+TWLKEY="/opt/alsoc/tripwire/config";
+TWREPORT="/opt/alsoc/tripwire/lib/tripwire/report";
+HOSTNAME=localhost.localdomain;
+
+  ##############################################################################
+ #  Predefined Variables                                                      #
+##############################################################################
+#
+#  Property Masks
+#
+#  -  ignore the following properties
+#  +  check the following properties
+#
+#  a  access timestamp (mutually exclusive with +CMSH)
+#  b  number of blocks allocated
+#  c  inode creation/modification timestamp
+#  d  ID of device on which inode resides
+#  g  group id of owner
+#  i  inode number
+#  l  growing files (logfiles for example)
+#  m  modification timestamp
+#  n  number of links
+#  p  permission and file mode bits
+#  r  ID of device pointed to by inode (valid only for device objects)
+#  s  file size
+#  t  file type
+#  u  user id of owner
+#
+#  C  CRC-32 hash
+#  H  HAVAL hash
+#  M  MD5 hash
+#  S  SHA hash
+#
+##############################################################################
+
+Device        = +pugsdr-intlbamcCMSH ;
+Dynamic       = +pinugtd-srlbamcCMSH ;
+Growing       = +pinugtdl-srbamcCMSH ;
+IgnoreAll     = -pinugtsdrlbamcCMSH ;
+IgnoreNone    = +pinugtsdrbamcCMSH-l ;
+ReadOnly      = +pinugtsdbmCM-rlacSH ;
+Temporary     = +pugt ;
+
+@@section FS 
+
+  ########################################
+ #                                      ##
+######################################## #
+#                                      # #
+#  Tripwire Binaries and Data Files    # #
+#                                      ##
+########################################
+
+# Tripwire Binaries
+(
+  rulename = "Tripwire Binaries",
+)
+{
+  $(TWBIN)/siggen                      -> $(ReadOnly) ;
+  $(TWBIN)/tripwire                    -> $(ReadOnly) ;
+  $(TWBIN)/twadmin                     -> $(ReadOnly) ;
+  $(TWBIN)/twprint                     -> $(ReadOnly) ;
+}
+
+  ################################################
+ #                                              ##
+################################################ #
+#                                              # #
+#  Global Configuration Files (/etc/)          # #
+#                                              ##
+################################################
+(
+  rulename = "Global Configuration Files",
+)
+{
+  ((ONEFILE))
+}

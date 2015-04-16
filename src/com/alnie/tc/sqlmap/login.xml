@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap namespace="login">
+   		<typeAlias alias="TSysOperator" type="com.alnie.tc.po.SysOperator" />
+    	<resultMap class="TSysOperator" id="RSysOperator">
+			<result property="operatorId" column="operator_id" />
+			<result property="operatorName" column="operator_name" />
+			<result property="operatorRealname" column="operator_realname" />
+			<result property="mobile" column="mobile" />
+			<result property="email" column="email" />
+			<result property="password" column="password" />
+			<result property="comments" column="comments" />
+			<result property="status" column="status" />
+			<result property="lastLogintimeStr" column="f_last_logintime" />
+			<result property="createTime" column="create_time" />
+			<result property="roleName" column="role_name" />
+		</resultMap> 
+    	<select id="getSysOperator" parameterClass="java.lang.String" resultMap="RSysOperator">
+    		select t.*,date_format(t.last_logintime,'%Y-%m-%d %H:%i:%s') as f_last_logintime,
+    		(select group_concat(c.role_name) from sys_operator_role b,sys_role c where b.role_id=c.role_id and b.operator_id=t.operator_id) as role_name
+    		 from sys_operator t where operator_name=#operator_name#
+    	</select>
+    </sqlMap>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap namespace="device">
+    	<select id="list" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.id,t.ip,t.type,t.description from device t
+    		<dynamic prepend="WHERE">
+	    		<isNotEmpty prepend=" AND " property="ip">  
+		            t.ip like '%$ip$%'     
+				</isNotEmpty>  
+	    		<isNotEmpty prepend=" AND " property="type">  
+		            t.type=#type#    
+				</isNotEmpty>  
+			</dynamic>  
+		    order by ip limit #start_row#,#end_row#
+    	</select>
+    	<select id="total" parameterClass="java.util.HashMap" resultClass="int">
+    		select count(1) from device t
+    		<dynamic prepend="WHERE">  
+		        <isNotEmpty prepend=" AND " property="ip">  
+		            t.ip like '%$ip$%'     
+				</isNotEmpty>  
+	    		<isNotEmpty prepend=" AND " property="type">  
+		            t.type=#type#    
+				</isNotEmpty>  
+		    </dynamic>  
+    	</select>
+    	<insert id="new" parameterClass="java.util.HashMap">
+    		insert into device(id,ip,type,main_type,description)
+    		values(#id#,#ip#,#type#,#main_type#,#description#)
+    	</insert>
+    	<update id="mod" parameterClass="java.util.HashMap">
+			update device set ip=#ip#,type=#type#,main_type=#main_type#,description=#description# where id=#id#
+		</update>
+		<delete id="del" parameterClass="java.util.HashMap">
+			delete from device where id=#id#
+		</delete>
+    	<select id="det" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.id,t.ip,t.type,t.description,t.main_type from device t where id=#id#
+    	</select>
+    	<select id="newCheck" parameterClass="java.util.HashMap" resultClass="int">
+    		select count(1) from device where ip=#ip#
+    	</select>
+    	<select id="modCheck" parameterClass="java.util.HashMap" resultClass="int">
+    		<![CDATA[ 
+    			select count(1) from device where ip=#ip# and id<>#id#
+    		]]>
+    	</select>
+    	<select id="cbList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.ip from device t order by ip
+    	</select>
+    </sqlMap>

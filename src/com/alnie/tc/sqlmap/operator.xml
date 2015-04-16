@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap namespace="operator">
+    	<select id="list" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		<![CDATA[ 
+	    		select t.*,date_format(t.create_time,'%Y-%m-%d %H:%i:%s') as f_create_time,date_format(t.last_logintime,'%Y-%m-%d %H:%i:%s') as f_last_logintime
+	    		,(select group_concat(c.role_name) from sys_operator_role b,sys_role c where b.role_id=c.role_id and b.operator_id=t.operator_id) as role_name 
+	    		from sys_operator t where status=1 and t.operator_id<>0
+	    	 ]]>
+	    		<isNotEmpty prepend=" AND " property="operator_name">  
+		            t.operator_name like '%$operator_name$%'     
+				</isNotEmpty>  
+			    order by operator_name limit #start_row#,#end_row#
+		   
+    	</select>
+    	<select id="total" parameterClass="java.util.HashMap" resultClass="int">
+    		<![CDATA[ select count(1) from sys_operator t where status=1 and t.operator_id<>0]]>
+    		<isNotEmpty prepend=" AND " property="operator_realname">  
+	            t.operator_realname like '%$operator_realname$%'     
+			</isNotEmpty>  
+    	</select>
+    	<insert id="new" parameterClass="java.util.HashMap">
+    		insert into sys_operator(operator_name,operator_realname,mobile,email,password,comments,status,last_logintime,create_time)
+    		values(#operator_name#,#operator_realname#,#mobile#,#email#,#password#,#comments#,#status#,null,date_format(now(),'%Y-%m-%d %H:%i:%s'))
+    		<selectKey resultClass="int" keyProperty="operator_id">
+  				SELECT LAST_INSERT_ID()
+ 			</selectKey>
+    	</insert>
+    	<delete id="delOptRole" parameterClass="java.util.HashMap">
+			delete from sys_operator_role where operator_id=#operator_id#
+		</delete>
+    	<insert id="newOptRole" parameterClass="java.util.HashMap">
+    		insert into sys_operator_role(operator_id,role_id)
+    		values(#operator_id#,#role_id#)
+    	</insert>
+    	<update id="mod" parameterClass="java.util.HashMap">
+			update sys_operator set operator_name=#operator_name#,operator_realname=#operator_realname#,mobile=#mobile#,email=#email#,comments=#comments# where operator_id=#operator_id#
+		</update>
+		<update id="del" parameterClass="java.util.HashMap">
+			update sys_operator set status=#status# where operator_id=#operator_id#
+		</update>
+		<update id="modPwd" parameterClass="java.util.HashMap">
+			update sys_operator set password=#password# where operator_id=#operator_id#
+		</update>
+    	<select id="det" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.*
+    		,(select group_concat(convert(b.role_id , char)) from sys_operator_role b where b.operator_id=t.operator_id) as role_id
+    		,(select group_concat(c.role_name) from sys_operator_role b,sys_role c where b.role_id=c.role_id and b.operator_id=t.operator_id) as role_name
+    		 from sys_operator t where operator_id=#operator_id#
+    	</select>
+    	<select id="newCheck" parameterClass="java.util.HashMap" resultClass="int">
+    		select count(1) from sys_operator where operator_name=#operator_name#
+    	</select>
+    	<select id="modCheck" parameterClass="java.util.HashMap" resultClass="int">
+    		<![CDATA[ 
+    			select count(1) from sys_operator where operator_name=#operator_name# and operator_id<>#operator_id#
+    		]]>
+    	</select>
+    	<update id="modLastLoginTime"  parameterClass="com.alnie.tc.po.SysOperator">
+			update sys_operator set last_logintime=now() where operator_id=#operatorId#
+		</update>
+    </sqlMap>

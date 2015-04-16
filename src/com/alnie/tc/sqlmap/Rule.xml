@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap namespace="Rule">
+    	<select id="list" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.id,t.content,t.devices,t.createtime from rule t
+    		<dynamic prepend="WHERE">
+	    		<isNotEmpty prepend=" AND " property="content">  
+		            t.content like '%$content$%'     
+				</isNotEmpty>  
+			</dynamic>  
+		    order by createtime desc limit #start_row#,#end_row#
+    	</select>
+    	<select id="total" parameterClass="java.util.HashMap" resultClass="int">
+    		select count(1) from rule t
+    		<dynamic prepend="WHERE">  
+		        <isNotEmpty prepend=" AND " property="content">  
+		            t.content like '%$content$%'     
+				</isNotEmpty>  
+		    </dynamic>  
+    	</select>
+    	<insert id="new" parameterClass="java.util.HashMap">
+    		insert into rule(content,devices,status)
+    		values(#content#,#devices#,#status#)
+    	</insert>
+    	<update id="mod" parameterClass="java.util.HashMap">
+			update rule set content=#content#,devices=#devices#,status=#status#
+		</update>
+		<delete id="del" parameterClass="java.util.HashMap">
+			delete from rule where id=#id#
+		</delete>
+    	<select id="det" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select * from rule where id=#id#
+    	</select>
+    </sqlMap>

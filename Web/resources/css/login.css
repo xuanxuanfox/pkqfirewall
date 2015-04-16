@@ -1,0 +1,72 @@
+HTML {
+	OVERFLOW: hidden
+}
+BODY {
+	BORDER-BOTTOM: 0px; TEXT-ALIGN: left; BORDER-LEFT: 0px; PADDING-BOTTOM: 0px; LINE-HEIGHT: 100%; BACKGROUND-COLOR: #17569e; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; HEIGHT: 100%; FONT-SIZE: 12px; BORDER-TOP: 0px; BORDER-RIGHT: 0px; PADDING-TOP: 0px
+}
+FORM {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.clear {
+	LINE-HEIGHT: 1px; CLEAR: both
+}
+.login_main {
+	POSITION: relative; TEXT-ALIGN: left; MARGIN: 0px auto; WIDTH: 1065px
+}
+.login_top {
+	BACKGROUND-IMAGE: url(../images/login/login_top.jpg); WIDTH: 100%; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: -100px 0px; HEIGHT: 337px
+}
+.login_middle {
+	WIDTH: 100%; HEIGHT: 191px
+}
+.login_middleleft {
+	BACKGROUND-IMAGE: url(../images/login/login_centerleft.jpg); WIDTH: 334px; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: -100px 0px; FLOAT: left; HEIGHT: 100%
+}
+.login_middlecenter {
+	BACKGROUND-IMAGE: url(../images/login/login_centerright.jpg); TEXT-ALIGN: left; WIDTH: 731px; BACKGROUND-REPEAT: no-repeat; FLOAT: left; HEIGHT: 100%
+}
+.login_bottom {
+	BACKGROUND-IMAGE: url(../images/login/login_bottom.jpg); WIDTH: 100%; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: -100px 0px; HEIGHT: 213px
+}
+.login_title {
+	BACKGROUND-IMAGE: url(../images/login/title.png); POSITION: absolute; WIDTH: 441px; BACKGROUND-REPEAT: no-repeat; HEIGHT: 52px; TOP: 180px; LEFT: 420px
+}
+.letter_space {
+	LETTER-SPACING: 1em
+}
+.login_user {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; COLOR: #ffffff; FONT-WEIGHT: bold; PADDING-TOP: 0px
+}
+.login_pass {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; COLOR: #ffffff; FONT-WEIGHT: bold; PADDING-TOP: 28px
+}
+.login_form {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 90px; PADDING-RIGHT: 0px; PADDING-TOP: 10px
+}
+.login_button INPUT {
+	BACKGROUND-IMAGE: url(../images/login/click.gif); BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; BACKGROUND-COLOR: transparent; WIDTH: 65px; HEIGHT: 24px; BORDER-TOP: 0px; CURSOR: hand; BORDER-RIGHT: 0px
+}
+.login_user INPUT {
+	FONT-WEIGHT: bold;BACKGROUND-IMAGE: url(../images/login/click.gif); BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; LINE-HEIGHT: 18px; BACKGROUND-COLOR: transparent; WIDTH: 280px; HEIGHT: 18px; BORDER-TOP: 0px; BORDER-RIGHT: 0px
+}
+.login_pass INPUT {
+	FONT-WEIGHT: bold;BACKGROUND-IMAGE: url(../images/login/click.gif); BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; LINE-HEIGHT: 18px; BACKGROUND-COLOR: transparent; WIDTH: 280px; HEIGHT: 18px; BORDER-TOP: 0px; BORDER-RIGHT: 0px
+}
+.login_button_left {
+	POSITION: absolute; TOP: 436px; LEFT: 413px
+}
+.login_button_right {
+	POSITION: absolute; TOP: 436px; LEFT: 495px
+}
+.login_copyright {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; COLOR: #ffffff; PADDING-TOP: 170px
+}
+.login_info {
+	POSITION: absolute; LINE-HEIGHT: 150%; WIDTH: 240px; COLOR: red; OVERFLOW: hidden; TOP: 480px; LEFT: 520px
+}
+.login_skin {
+	POSITION: absolute; LINE-HEIGHT: 30px; BOTTOM: 10px; HEIGHT: 30px; COLOR: #ffffff; RIGHT: 10px
+}
+.login_skin SPAN {
+	CURSOR: hand
+}

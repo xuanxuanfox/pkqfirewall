@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 业务级配置 BEGIN -->
+	<package name="web-rule" extends="web-default"  namespace="/rule">
+		<action name="index" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/rule/index.jsp</result></action>
+		<action name="new" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/rule/new.jsp</result></action>
+		<action name="mod" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/rule/mod.jsp</result></action>
+		<action name="det" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/rule/det.jsp</result></action>
+	</package>
+	<package name="web-rule-json" extends="web-default-ajax" namespace="/rule">
+		<action name="list" class="RuleAction" method="List"></action>
+		<action name="saveNew" class="RuleAction" method="New"></action>
+		<action name="saveMod" class="RuleAction" method="Mod"></action>
+		<action name="saveDel" class="RuleAction" method="Del"></action>
+		<action name="detail" class="RuleAction" method="Det"></action>
+	</package>
+	<!-- 业务级配置 BEGIN -->
+</struts>
+

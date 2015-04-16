@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd" default-lazy-init="true">
+	
+	
+	<!-- 业务级数据 BEGIN-->
+	<bean id="OperatorAction" class="com.alnie.tc.action.OperatorAction" scope="prototype">
+		<property name="service" ref="operatorService" />
+	</bean>
+	<bean id="operatorService" class="com.alnie.tc.service.OperatorService">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	<bean id="DeviceAction" class="com.alnie.tc.action.DeviceAction" scope="prototype">
+		<property name="service" ref="deviceService" />
+	</bean>
+	<bean id="deviceService" class="com.alnie.tc.service.DeviceService">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	<bean id="ResourceAction" class="com.alnie.tc.action.ResourceAction" scope="prototype">
+		<property name="service" ref="resourceService" />
+	</bean>
+	<bean id="resourceService" class="com.alnie.tc.service.ResourceService">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	<bean id="CheckbehaviorAction" class="com.alnie.tc.action.CheckbehaviorAction" scope="prototype">
+		<property name="service" ref="checkbehaviorService" />
+	</bean>
+	<bean id="checkbehaviorService" class="com.alnie.tc.service.CheckbehaviorService">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	<bean id="CheckresultAction" class="com.alnie.tc.action.CheckresultAction" scope="prototype">
+		<property name="service" ref="checkresultService" />
+	</bean>
+	<bean id="checkresultService" class="com.alnie.tc.service.CheckresultService">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	<bean id="LogAction" class="com.alnie.tc.action.LogAction" scope="prototype">
+		<property name="service" ref="logService" />
+	</bean>
+	<bean id="logService" class="com.alnie.tc.service.LogService">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	
+	<bean id="RuleAction" class="com.alnie.tc.action.RuleAction" scope="prototype">
+		<property name="service" ref="RuleService" />
+	</bean>
+	<bean id="RuleService" class="com.alnie.tc.service.RuleService">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+
+	<!-- 业务级数据 END-->
+</beans>

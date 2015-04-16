@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+body,tr,td {
+	font-size: 13px;
+	margin: 0;
+	background-color: #F4F7F8;
+}
+
+.divItem {
+	list-style-type: none;
+	display: block;
+	padding: 5px;
+	border: 1px solid #ccc;
+	margin: 2px;
+	width: 250px;
+	background: #fafafa;
+	color: #444;
+}
+
+.dp {
+	opacity: 0.5;
+	filter: alpha(opacity = 50);
+}
+
+.over {
+	background: #FBEC88;
+}
+
+.s{
+	color: red;
+	font-weight: bold;
+}

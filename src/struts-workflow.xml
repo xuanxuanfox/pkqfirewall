@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 业务级配置 BEGIN -->
+	<package name="web-workflow" extends="web-default"  namespace="/workflow">
+		<action name="index" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/workflow/deployment/index.jsp</result></action>
+ 		<action name="deployment" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/workflow/deployment/deployment.jsp</result></action>
+ 		<action name="delete" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/workflow/deployment/delete.jsp</result></action>
+ 		<action name="image" class="WorkFlowAction">
+			<result type="stream">
+				<param name="contentType">image/png</param>
+				<param name="inputName">orderImage</param>
+      		</result>
+ 		</action>
+ 		<action name="todo" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/workflow/todo.jsp</result></action>
+ 		<action name="handled" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/workflow/handled.jsp</result></action>
+ 		<action name="todoDetail" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/workflow/todoDetail.jsp</result></action>
+ 		<action name="orderImageIndex" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/workflow/orderImage.jsp</result></action>
+ 		<action name="orderActivityIndex" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/workflow/orderActivity.jsp</result></action>
+ 		<action name="orderAnnexIndex" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/workflow/orderAnnex.jsp</result></action>
+	</package>
+	<package name="web-workflow-json" extends="web-default-ajax" namespace="/workflow">
+		<action name="todoList" class="WorkFlowAction" method="TodoList"></action>
+		<action name="urlInfo" class="WorkFlowAction" method="UrlInfo"></action>
+		<action name="templateList" class="WorkFlowAction" method="TemplateList"></action>
+		<action name="activityList" class="WorkFlowAction" method="ActivityList"></action>
+		<action name="handledList" class="WorkFlowAction" method="HandledList"></action>
+		<action name="annexList" class="WorkFlowAction" method="AnnexList"></action>
+		<action name="annexDelete" class="WorkFlowAction" method="AnnexDelete"></action>
+		<action name="todoStat" class="WorkFlowAction" method="WorkflowTodoStat"></action>
+		<action name="delete" class="WorkFlowAction" method="ProcessInstanceDel"></action>
+	</package>
+	<!-- 业务级配置 BEGIN -->
+</struts>
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 业务级配置 BEGIN -->
+	<package name="web-checkresult" extends="web-default"  namespace="/checkresult">
+		<action name="index" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/checkresult/index.jsp</result></action>
+		<action name="det" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/checkresult/det.jsp</result></action>
+		<action name="statIndex" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/checkresult/stat.jsp</result></action>
+	</package>
+	<package name="web-checkresult-json" extends="web-default-ajax" namespace="/checkresult">
+		<action name="list" class="CheckresultAction" method="List"></action>
+		<action name="detail" class="CheckresultAction" method="Det"></action>
+		<action name="statStream" class="CheckresultAction">
+			<result type="stream">
+				<param name="contentType">application/xml</param>
+				<param name="inputName">statStream</param>
+			</result>
+ 		</action>
+	</package>
+	<!-- 业务级配置 BEGIN -->
+</struts>
+

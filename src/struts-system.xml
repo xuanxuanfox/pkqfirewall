@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 系统级配置 BEGIN -->
+	<package name="web-nocheck-system" extends="web-nocheck-default" namespace="/system">
+		<action name="login" class="SystemAction" method="LoginIndex"></action>
+		<action name="logout" class="SystemAction" method="LogoutIndex"></action>
+	</package>
+	<package name="web-system" extends="web-default" namespace="/system">
+		<action name="main" class="SystemAction" method="MainIndex"></action>
+		<action name="index" class="SystemAction" method="IndexPage"></action>
+		<action name="error" class="SystemAction" method="ErrorIndex"></action>
+		<action name="myinfo" class="SystemAction" method="IndexPage"><result name="index">/WEB-INF/jsp/system/myinfo.jsp</result></action>
+		<action name="mypwd" class="SystemAction" method="IndexPage"><result name="index">/WEB-INF/jsp/system/mypwd.jsp</result></action>
+		<action name="exportStream" class="SystemAction">
+			<result type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="inputName">exportStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">4096</param>
+	      	</result>
+   		</action>
+   		<action name="privilege" class="SystemAction" method="IndexPage"><result name="index">/WEB-INF/jsp/system/privilege.jsp</result></action>
+	</package>
+	<package name="web-nocheck-system-json" extends="web-nocheck-ajax" namespace="/system">
+		<action name="loginAction" class="LoginAction" method="Login"></action>
+		<action name="logoutAction" class="LoginAction" method="Logout"></action>
+	</package>
+	<package name="web-system-json" extends="web-default-ajax" namespace="/system">
+		<action name="menu" class="SystemAction" method="Menu"></action>
+		<action name="menuFunctionTitle" class="SystemAction" method="MenuFunctionTitle"></action>
+		<action name="systemConfigList" class="SystemAction" method="SystemConfigList"></action>
+		<action name="systemRole" class="SystemAction" method="SystemRole"></action>
+		<action name="systemRolePrivilege" class="SystemAction" method="SystemRolePrivilege"></action>
+		<action name="systemRolePrivilegeAdd" class="SystemAction" method="SystemRolePrivilegeAdd"></action>
+	</package>
+	<!-- 系统级配置 END -->
+</struts>
+

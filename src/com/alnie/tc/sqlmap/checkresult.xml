@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap namespace="checkresult">
+    	<select id="list" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.id,t.resourceip,t.filepath,date_format(t.changetime,'%Y-%m-%d %H:%i:%s') as changetime,e.config_value as changetype_desc from checkresult t,sys_config e where t.changetype=e.config_id and e.config_group_id=100003
+    		<isNotEmpty prepend=" AND " property="resourceip">  
+	            t.resourceip like '%$resourceip$%'     
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="changetype">  
+	            t.changetype=#changetype#
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="start_changetime">  
+	            <![CDATA[ date_format(t.changetime,'%Y-%m-%d')>=#start_changetime# ]]>
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="end_changetime">  
+				<![CDATA[ date_format(t.changetime,'%Y-%m-%d')<=#end_changetime# ]]>
+			</isNotEmpty>  
+		    order by t.changetime desc,t.resourceip limit #start_row#,#end_row#
+    	</select>
+    	<select id="total" parameterClass="java.util.HashMap" resultClass="int">
+    		select count(1) from checkresult t
+    		<dynamic prepend="WHERE">  
+		        <isNotEmpty prepend=" AND " property="resourceip">  
+		            t.resourceip like '%$resourceip$%'     
+				</isNotEmpty>  
+				<isNotEmpty prepend=" AND " property="changetype">  
+		            t.changetype=#changetype#
+				</isNotEmpty>  
+				<isNotEmpty prepend=" AND " property="start_changetime">  
+		            <![CDATA[ date_format(t.changetime,'%Y-%m-%d')>=#start_changetime# ]]>
+				</isNotEmpty>  
+				<isNotEmpty prepend=" AND " property="end_changetime">  
+					<![CDATA[ date_format(t.changetime,'%Y-%m-%d')<=#end_changetime# ]]>
+				</isNotEmpty>  
+		    </dynamic>  
+    	</select>
+    	<select id="det" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.id,t.resourceip,t.filepath,date_format(t.changetime,'%Y-%m-%d %H:%i:%s') as changetime,e.config_value as changetype_desc from checkresult t,sys_config e where t.changetype=e.config_id and e.config_group_id=100003 and id=#id#
+    	</select>
+    	<select id="statList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select resourceip,count(1) as ct from checkresult t
+    		<dynamic prepend="WHERE">  
+		        <isNotEmpty prepend=" AND " property="resourceip">  
+		            t.resourceip like '%$resourceip$%'     
+				</isNotEmpty>  
+				<isNotEmpty prepend=" AND " property="changetype">  
+		            t.changetype=#changetype#
+				</isNotEmpty>  
+				<isNotEmpty prepend=" AND " property="start_changetime">  
+		            <![CDATA[ date_format(t.changetime,'%Y-%m-%d')>=#start_changetime# ]]>
+				</isNotEmpty>  
+				<isNotEmpty prepend=" AND " property="end_changetime">  
+					<![CDATA[ date_format(t.changetime,'%Y-%m-%d')<=#end_changetime# ]]>
+				</isNotEmpty>  
+		    </dynamic>  
+    		group by resourceip order by resourceip
+    	</select>
+    </sqlMap>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings useStatementNamespaces="true" />
+  	<sqlMap resource="com/alnie/tc/sqlmap/login.xml"/>
+  	<sqlMap resource="com/alnie/tc/sqlmap/system.xml"/>
+  	<sqlMap resource="com/alnie/tc/sqlmap/operator.xml"/>
+  	<sqlMap resource="com/alnie/tc/sqlmap/device.xml"/>
+  	<sqlMap resource="com/alnie/tc/sqlmap/resource.xml"/>
+  	<sqlMap resource="com/alnie/tc/sqlmap/checkbehavior.xml"/>
+  	<sqlMap resource="com/alnie/tc/sqlmap/checkresult.xml"/>
+  	<sqlMap resource="com/alnie/tc/sqlmap/log.xml"/>
+  	<sqlMap resource="com/alnie/tc/sqlmap/Rule.xml"/>
+</sqlMapConfig>

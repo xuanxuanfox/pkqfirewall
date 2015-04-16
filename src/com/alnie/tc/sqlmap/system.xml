@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap namespace="system">
+    	<select id="getSysFunction" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select function_id,function_name,parent_function_id,function_class,type,href,function_index,status,comments,title,group_id 
+    		from sys_function where status = 1 and type in(0,1)
+			 and function_id in(
+			 select function_id from sys_access_control where access_type=1
+			  and access_id in(select role_id from sys_operator_role where operator_id=#operatorId#)
+			 union
+			 select function_id from sys_access_control where access_type=0
+			 and access_id in(#operatorId#))
+			 and parent_function_id=#parentFunctionId#
+			 order by function_index,function_id
+    	</select>
+    	
+    	<select id="getMenuFunctionTitle" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.* from sys_function t start with t.function_id = #function_id# connect by prior t.parent_function_id = t.function_id order by t.function_id
+    	</select>
+    	
+    	<select id="getSystemConfigList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.* from sys_config t
+    		<dynamic prepend="WHERE">  
+		        <isNotEmpty prepend=" AND " property="config_group_id">  
+		            t.config_group_id=#config_group_id#     
+				</isNotEmpty>  
+			 	<isNotEmpty prepend=" AND " property="config_id">  
+		            t.config_id=#config_id#     
+				</isNotEmpty>  
+				<isNotEmpty prepend=" AND " property="config_value">  
+		            t.config_value=#config_value#     
+				</isNotEmpty>  
+		    </dynamic>  
+		    order by config_group_id,config_id
+    	</select>
+    	<insert id="newLog" parameterClass="com.alnie.tc.po.SysLogs">
+    		insert into sys_logs(operator_id,trans_type,trans_result,trans_sub_type,trans_details,trans_time)
+    		values(#operatorId#,#transType#,#transResult#,#transSubType#,#transDetails#,date_format(now(),'%Y-%m-%d %H:%i:%s'))
+    	</insert>
+    	<insert id="newLoginLog" parameterClass="com.alnie.tc.po.SysLogs">
+    		insert into sys_login_logs(operator_id,trans_type,trans_result,trans_details,trans_time)
+    		values(#operatorId#,#transType#,#transResult#,#transDetails#,date_format(now(),'%Y-%m-%d %H:%i:%s'))
+    	</insert>
+    	<select id="role" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		<![CDATA[ 
+    			select role_id,role_name from sys_role where role_id<>1 order by role_id
+    		]]>
+    	</select>
+    	<select id="privilegeSysFunction" parameterClass="int" resultClass="java.util.HashMap">
+    		select function_id,function_name,parent_function_id,function_class,type,href,function_index,status,comments,title,group_id 
+    		from sys_function where status = 1 and type in(0,1)
+			 and parent_function_id=#parentFunctionId#
+			 order by function_index,function_id
+    	</select>
+    	<select id="privilegeSysRole" parameterClass="java.util.HashMap" resultClass="int">
+    		select count(1)
+    		from sys_access_control where access_type = 1
+			and access_id=#access_id#
+			and function_id=#function_id#
+    	</select>
+    	<insert id="privilegeAdd" parameterClass="java.util.HashMap">
+    		insert into sys_access_control(access_id,access_type,function_id)
+    		values(#access_id#,1,#function_id#)
+    	</insert>
+    	<delete id="privilegeDel" parameterClass="int">
+			delete from sys_access_control where access_id=#access_id#
+		</delete>
+    </sqlMap>

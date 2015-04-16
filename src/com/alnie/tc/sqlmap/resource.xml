@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    <sqlMap namespace="resource">
+    	<select id="list" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.id,t.ip,t.filetype,t.filepath,t.description,date_format(t.addedtime,'%Y-%m-%d %H:%i:%s') as addedtime,e.config_value as filetype_desc from resource t,sys_config e where t.filetype=e.config_id and e.config_group_id=100001
+    		<isNotEmpty prepend=" AND " property="ip">  
+	            t.ip like '%$ip$%'     
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="filepath">  
+	            t.filepath like '%$filepath$%'     
+			</isNotEmpty>  
+		    order by ip,filepath limit #start_row#,#end_row#
+    	</select>
+    	<select id="total" parameterClass="java.util.HashMap" resultClass="int">
+    		select count(1) from resource t
+    		<dynamic prepend="WHERE">  
+				<isNotEmpty prepend=" AND " property="ip">  
+		            t.ip like '%$ip$%'     
+				</isNotEmpty>  
+				<isNotEmpty prepend=" AND " property="filepath">  
+		            t.filepath like '%$filepath$%'     
+				</isNotEmpty>  
+		    </dynamic>  
+    	</select>
+    	<insert id="new" parameterClass="java.util.HashMap">
+    		insert into resource(id,ip,filetype,filepath,description,addedtime)
+    		values(#id#,#ip#,#filetype#,#filepath#,#description#,now())
+    	</insert>
+    	<update id="mod" parameterClass="java.util.HashMap">
+			update resource set ip=#ip#,filetype=#filetype#,filepath=#filepath#,description=#description# where id=#id#
+		</update>
+		<delete id="del" parameterClass="java.util.HashMap">
+			delete from resource where id=#id#
+		</delete>
+    	<select id="det" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.id,t.ip,t.filetype,t.filepath,t.description,date_format(t.addedtime,'%Y-%m-%d %H:%i:%s') as addedtime,e.config_value as filetype_desc from resource t,sys_config e where t.filetype=e.config_id and e.config_group_id=100001 and id=#id#
+    	</select>
+    	<select id="newCheck" parameterClass="java.util.HashMap" resultClass="int">
+    		select count(1) from resource where ip=#ip# and filepath=#filepath#
+    	</select>
+    	<select id="modCheck" parameterClass="java.util.HashMap" resultClass="int">
+    		<![CDATA[ 
+    			select count(1) from resource where ip=#ip# and filepath=#filepath# and id<>#id#
+    		]]>
+    	</select>
+    	<select id="exportList" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select t.id,t.ip,t.filetype,t.filepath,t.description,date_format(t.addedtime,'%Y-%m-%d %H:%i:%s') as addedtime,e.config_value as filetype_desc from resource t,sys_config e where t.filetype=e.config_id and e.config_group_id=100001
+    		<isNotEmpty prepend=" AND " property="ip">  
+	            t.ip like '%$ip$%'     
+			</isNotEmpty>  
+			<isNotEmpty prepend=" AND " property="filepath">  
+	            t.filepath like '%$filepath$%'     
+			</isNotEmpty>  
+		    order by ip,filepath
+    	</select>
+    	
+<select id="getbydevice" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+    		select * from resource t
+    		<dynamic prepend="WHERE">  
+				<isNotEmpty prepend=" AND " property="ip">  
+		            t.ip='$ip$'     
+				</isNotEmpty>  				 
+		    </dynamic>  
+    	</select>			    	
+    	
+    </sqlMap>

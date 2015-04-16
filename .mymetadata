@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="pkqfirewall"
+  id="myeclipse.1307946247865"
+  context-root="/pkqfirewall"
+  j2ee-spec="1.4"
+  archive="pkqfirewall.war">
+  <attributes>
+    <attribute name="webrootdir" value="/Web" />
+  </attributes>
+</project-module>
+

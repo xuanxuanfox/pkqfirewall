@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 业务级配置 BEGIN -->
+	<package name="web-operator" extends="web-default"  namespace="/operator">
+		<action name="index" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/operator/index.jsp</result></action>
+		<action name="new" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/operator/new.jsp</result></action>
+		<action name="mod" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/operator/mod.jsp</result></action>
+		<action name="det" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/operator/det.jsp</result></action>
+	</package>
+	<package name="web-operator-json" extends="web-default-ajax" namespace="/operator">
+		<action name="list" class="OperatorAction" method="List"></action>
+		<action name="saveNew" class="OperatorAction" method="New"></action>
+		<action name="saveMod" class="OperatorAction" method="Mod"></action>
+		<action name="saveDel" class="OperatorAction" method="Del"></action>
+		<action name="saveModPwd" class="OperatorAction" method="ModPwd"></action>
+		<action name="detail" class="OperatorAction" method="Det"></action>
+		<action name="saveModMyinfo" class="OperatorAction" method="ModMyinfo"></action>
+	</package>
+	<!-- 业务级配置 BEGIN -->
+</struts>
+

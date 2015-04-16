@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd" default-lazy-init="true">
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list><value>/config/db.properties</value></list>
+		</property>
+	</bean>
+	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource" destroy-method="close">
+		<property name="driver" value="${db.driverClassName}"/>
+		<property name="driverUrl" value="${db.url}"/>		
+		<property name="user" value="${db.username}"/>
+		<property name="password" value="${db.password}"/>
+		<property name="houseKeepingSleepTime" value="${db.houseKeepingSleepTime}" />
+		<property name="prototypeCount" value="${db.prototypeCount}" />
+		<property name="maximumConnectionCount" value="${db.maximumConnectionCount}" />
+		<property name="minimumConnectionCount" value="${db.minimumConnectionCount}" />
+		<property name="trace" value="${db.trace}" />
+		<property name="verbose" value="${db.verbose}" />
+		<property name="maximumActiveTime" value="${db.maximumActiveTime}" />
+		<property name="maximumConnectionLifetime" value="${db.maximumConnectionLifetime}" />
+		<property name="testBeforeUse" value="${db.testBeforeUse}" />
+		<property name="testAfterUse" value="${db.testAfterUse}" />
+		<property name="houseKeepingTestSql" value="${db.houseKeepingTestSql}" />
+		<property name="simultaneousBuildThrottle" value="${db.simultaneousBuildThrottle}" />
+	</bean>
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation">
+			<value>/config/sqlMapConfig.xml</value>
+		</property>
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+	</bean>
+</beans>

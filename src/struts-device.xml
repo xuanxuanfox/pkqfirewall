@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 业务级配置 BEGIN -->
+	<package name="web-device" extends="web-default"  namespace="/device">
+		<action name="index" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/device/index.jsp</result></action>
+		<action name="new" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/device/new.jsp</result></action>
+		<action name="mod" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/device/mod.jsp</result></action>
+		<action name="det" class="SystemAction" method="IndexPage"><result name="index">/${jspFolder}/device/det.jsp</result></action>
+	</package>
+	<package name="web-device-json" extends="web-default-ajax" namespace="/device">
+		<action name="list" class="DeviceAction" method="List"></action>
+		<action name="saveNew" class="DeviceAction" method="New"></action>
+		<action name="saveMod" class="DeviceAction" method="Mod"></action>
+		<action name="saveDel" class="DeviceAction" method="Del"></action>
+		<action name="detail" class="DeviceAction" method="Det"></action>
+		<action name="cbList" class="DeviceAction" method="CbList"></action>
+	</package>
+	<!-- 业务级配置 BEGIN -->
+</struts>
+
