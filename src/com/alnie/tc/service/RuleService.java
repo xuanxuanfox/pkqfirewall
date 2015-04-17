@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.apache.commons.beanutils.PropertyUtils;
 
 import com.pkq.firewall.message.request.AddRuleRequest;
+import com.pkq.firewall.message.request.DeleteRuleRequest;
 import com.pkq.firewall.message.request.GetDefaultRuleRequest;
 import com.pkq.firewall.message.request.GetRulesRequest;
 import com.pkq.firewall.message.response.GetDefaultRuleResponse;
@@ -104,6 +105,31 @@ public class RuleService  extends BaseService{
 		return new AjaxResult();
 	}
 	
+	public AjaxResult Del(HashMap baseMap)throws Exception{
+		Connection conn = null;//conn
+		SqlMapSession session = null;//session
+		try {
+			DeleteRuleRequest request = new DeleteRuleRequest();
+			request.setHost(baseMap.get("deviceip").toString());
+			request.setId(baseMap.get("id").toString());
+			Response response = NetworkOp.deleteRule(request);
+			conn = this.getSqlMapClient().getDataSource().getConnection();//conn
+		    conn.setAutoCommit(false);//conn
+		    
+			session.insert("system.newLog", new SysLogs(Constants.TRANS_LOG_RULE,"删除策略","策略："+baseMap.get("id")));
+			conn.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			if(null != conn)conn.rollback();//conn
+			this.getSqlMapClientTemplate().insert("system.newLog",new SysLogs(Constants.TRANS_LOG_RULE,0,"删除策略",e.getMessage()));
+			return new AjaxResult(AjaxResult.RESULT_CODE_FAIL,e.getMessage());
+		}finally{
+			if(null != session)session.close();//session
+			if(null != conn)conn.close();//conn
+		}
+		return new AjaxResult();
+	}
 	
 	public AjaxResult getDefaultRule(HashMap baseMap)throws Exception{
 	    String hostIp="";

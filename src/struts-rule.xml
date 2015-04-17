@@ -16,6 +16,7 @@
 		<action name="saveMod" class="RuleAction" method="Mod"></action>
 		<action name="saveDel" class="RuleAction" method="Del"></action>
 		<action name="detail" class="RuleAction" method="Det"></action>
+		<action name="getDefaultRule" class="RuleAction" method="getDefaultRule"></action>
 	</package>
 	<!-- 业务级配置 BEGIN -->
 </struts>

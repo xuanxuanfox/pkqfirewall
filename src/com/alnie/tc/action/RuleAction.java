@@ -13,5 +13,13 @@ public class RuleAction extends BaseAction {
 		this.ajaxData = (AjaxResult) this.service.execTrans("New",getBean());
 		return AJAXDATA;
 	}
+	public String Del() throws Exception {
+		this.ajaxData = (AjaxResult) this.service.execTrans("Del",getBean());
+		return AJAXDATA;
+	}
+	public String getDefaultRule() throws Exception {
+		this.ajaxData = (AjaxResult) this.service.execTrans("getDefaultRule",getBean());
+		return AJAXDATA;
+	}
 
 }

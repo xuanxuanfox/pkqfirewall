@@ -79,18 +79,18 @@ $(document).ready(function(){
 	}); 
 	$('#btnQuery').bind('click', function(){
 		var direction = $("#direction").combobox('getValue');
-		//alert(direction);
-		//$("#defaultpolicy").text("deny");
+		var params = { 'bean.direction': , 'bean.deviceip': deviceip}
+		//获取默认策略
 		$.ajax({
 					type: 'post',
-					url: RootPath+'/rule/saveDel.action',
+					url: RootPath+'/rule/getDefaultRule.action',
 					data: params,
 					dataType: 'text',
 					success:function(data, textStatus) {
-						$('#dg').datagrid('reload');
+						$("#defaultpolicy").text(data);
 					},
 					error:function() { 
-						showMsg("删除失败，请联系管理员!");
+						$("#defaultpolicy").text("");  //如果获取默认策略失败
 					}
 		})
 		$('#dg').datagrid('load', {

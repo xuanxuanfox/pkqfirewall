@@ -46,6 +46,21 @@ public class NetworkOp {
 		return response;
 	}
 	
+	public static Response deleteRule(DeleteRuleRequest req) throws Exception{
+		Response response = null;
+		
+		String jsonStringSend = JSON.toJSONString(req);
+		String jsonStringReceive = UdpClient.sendAndReceive(req.getHost(),PORT,jsonStringSend);
+		if( jsonStringReceive!=null ){
+			response = JSON.parseObject(jsonStringReceive, Response.class);
+		}
+		if(response.getResultCode()!=Constants.SUCESS_CODE){
+	    	throw new Exception(response.getResultMessage());
+	    }
+		//end just for test		
+		return response;
+	}
+
 	public static GetDefaultRuleResponse getDefaultRule(GetDefaultRuleRequest req) throws Exception{
 		GetDefaultRuleResponse response = null;
 		

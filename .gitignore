@@ -43,3 +43,8 @@ Temporary Items
 .apdisk
 
 *.jar
+*.class
+Web/WEB-INF/classes/com/alnie/tc/sqlmap/checkbehavior.xml
+*.xml
+.classpath
+.mymetadata
