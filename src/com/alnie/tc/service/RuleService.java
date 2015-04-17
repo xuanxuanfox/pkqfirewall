@@ -10,7 +10,9 @@ import java.util.UUID;
 import org.apache.commons.beanutils.PropertyUtils;
 
 import com.pkq.firewall.message.request.AddRuleRequest;
+import com.pkq.firewall.message.request.GetDefaultRuleRequest;
 import com.pkq.firewall.message.request.GetRulesRequest;
+import com.pkq.firewall.message.response.GetDefaultRuleResponse;
 import com.pkq.firewall.message.response.GetRulesResponse;
 import com.pkq.firewall.message.response.Response;
 import com.pkq.firewall.model.Rule;
@@ -100,5 +102,25 @@ public class RuleService  extends BaseService{
 			if(null != conn)conn.close();//conn
 		}
 		return new AjaxResult();
+	}
+	
+	
+	public AjaxResult getDefaultRule(HashMap baseMap)throws Exception{
+	    String hostIp="";
+		AjaxResult result =  new AjaxResult();
+		GetDefaultRuleRequest request = new GetDefaultRuleRequest();
+		hostIp=(String)baseMap.get("deviceip");
+	    request.setHost(hostIp);
+	    request.setDirection((String)baseMap.get("direction"));
+		try {
+		GetDefaultRuleResponse response = NetworkOp.getDefaultRule(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			this.getSqlMapClientTemplate().insert("system.newLog",new SysLogs(Constants.TRANS_LOG_RULE,0,"获取默认策略", e.getMessage() ));
+			return new AjaxResult(AjaxResult.RESULT_CODE_FAIL,e.getMessage());
+		}
+		return result;
+		
 	}
 }

@@ -80,7 +80,19 @@ $(document).ready(function(){
 	$('#btnQuery').bind('click', function(){
 		var direction = $("#direction").combobox('getValue');
 		//alert(direction);
-		$("#defaultpolicy").text("deny");
+		//$("#defaultpolicy").text("deny");
+		$.ajax({
+					type: 'post',
+					url: RootPath+'/rule/saveDel.action',
+					data: params,
+					dataType: 'text',
+					success:function(data, textStatus) {
+						$('#dg').datagrid('reload');
+					},
+					error:function() { 
+						showMsg("删除失败，请联系管理员!");
+					}
+		})
 		$('#dg').datagrid('load', {
 			'bean.ip': $("#deviceip").text(),'bean.direction': direction
 		});
@@ -107,7 +119,7 @@ $(document).ready(function(){
 					data: params,
 					dataType: 'text',
 					success:function(data, textStatus) {
-						$('#dg').datagrid('reload');
+						
 					},
 					error:function() { 
 						showMsg("删除失败，请联系管理员!");
