@@ -59,7 +59,7 @@ public class RuleService  extends BaseService{
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e.getMessage(), e);
-			throw e;
+			pageData=new PageData(0,null);
 		}finally{
 
 		}

@@ -24,7 +24,7 @@
 			data-options="
 			  valueField:'value'
 			  ,textField:'lable'
-			  ,data:[{lable:'redhat',value:'redhat'},{lable:'windows server 2008',value:'SERVER2008'}]
+			  ,data:[{lable:'redhat',value:'redhat'},{lable:'SERVER2008',value:'SERVER2008'}]
 			"
 		/>
 		<a href="#" id="btnQuery" class="easyui-linkbutton" iconCls="icon-search" plain="true">查询</a>

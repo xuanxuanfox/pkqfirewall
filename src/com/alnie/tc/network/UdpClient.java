@@ -18,6 +18,7 @@ public class UdpClient {
 		byte[] buffer = new byte[256];
 
 		buffer = strSend.getBytes();
+		System.out.println(strSend);
 		int len = buffer.length;
 		InetAddress ia = InetAddress.getByName(host);
 		DatagramPacket dgp = new DatagramPacket(buffer, len, ia, port);

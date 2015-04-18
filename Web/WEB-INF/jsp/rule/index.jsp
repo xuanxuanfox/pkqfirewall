@@ -77,9 +77,12 @@ $(document).ready(function(){
             checkEditDelBtnStatus();
         }
 	}); 
+	
 	$('#btnQuery').bind('click', function(){
+		alert("tt");
 		var direction = $("#direction").combobox('getValue');
-		var params = { 'bean.direction': , 'bean.deviceip': deviceip}
+		var params = { 'bean.direction': direction, 'bean.deviceip': deviceip}
+		alert(params);
 		//获取默认策略
 		$.ajax({
 					type: 'post',
