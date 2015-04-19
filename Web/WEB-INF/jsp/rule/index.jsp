@@ -79,10 +79,8 @@ $(document).ready(function(){
 	}); 
 	
 	$('#btnQuery').bind('click', function(){
-		alert("tt");
 		var direction = $("#direction").combobox('getValue');
 		var params = { 'bean.direction': 'direction', 'bean.deviceip': '<%=deviceip%>'}
-		alert(params);
 		//获取默认策略
 		$.ajax({
 					type: 'post',
@@ -104,7 +102,8 @@ $(document).ready(function(){
 	$('#btnAdd').bind('click', function() {
 	  	var opt = $('#btnAdd').linkbutton('options');
 	  	if(opt.disabled)return;
-	  	openwin({url:"/rule/new.action",title:"新增策略",width:400,height:300,fit:false});
+	  	var addurl="/rule/new.action?deviceip="+$("#deviceip").text();
+	  	openwin({url:addurl,title:"新增策略",width:400,height:300,fit:false});
 	});
 		  
 	$('#btnRemove').bind('click', function() {
@@ -115,7 +114,7 @@ $(document).ready(function(){
 				var ss = [];
 				var rows = $('#dg').datagrid('getSelections');
 				var params = {
-					'bean.id':rows[0].id
+					'bean.id':rows[0].id,'bean.deviceip': '<%=deviceip%>'
 				}
 				$.ajax({
 					type: 'post',
@@ -123,7 +122,7 @@ $(document).ready(function(){
 					data: params,
 					dataType: 'text',
 					success:function(data, textStatus) {
-						
+						$('#dg').datagrid('reload');
 					},
 					error:function() { 
 						showMsg("删除失败，请联系管理员!");

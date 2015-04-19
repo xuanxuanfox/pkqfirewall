@@ -85,7 +85,7 @@ public class RuleService  extends BaseService{
 		    rule.setProtocol((String)baseMap.get("protocol"));
 		    rule.setPort((String)baseMap.get("port"));
 		    rule.setRemoteIp((String)baseMap.get("remoteIp"));
-		    rule.setPort((String)baseMap.get("remotePort"));
+		    rule.setRemotePort((String)baseMap.get("remotePort"));
 		    request.setRule(rule);
 			//与代理通信
 		    Response response = NetworkOp.addRule(request);
@@ -110,13 +110,15 @@ public class RuleService  extends BaseService{
 		SqlMapSession session = null;//session
 		try {
 			DeleteRuleRequest request = new DeleteRuleRequest();
-			request.setHost(baseMap.get("deviceip").toString());
-			request.setId(baseMap.get("id").toString());
+			String ruleid=baseMap.get("id").toString();
+			String deviceip=baseMap.get("deviceip").toString();
+			request.setHost(deviceip);
+			request.setId(ruleid);
 			Response response = NetworkOp.deleteRule(request);
 			conn = this.getSqlMapClient().getDataSource().getConnection();//conn
 		    conn.setAutoCommit(false);//conn
 		    
-			session.insert("system.newLog", new SysLogs(Constants.TRANS_LOG_RULE,"删除策略","策略："+baseMap.get("id")));
+			session.insert("system.newLog", new SysLogs(Constants.TRANS_LOG_RULE,"删除策略","策略："+deviceip+":"+ruleid));
 			conn.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

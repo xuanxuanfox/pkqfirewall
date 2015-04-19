@@ -15,8 +15,8 @@ body{
 </style>
 
 <%
-	//String deviceip = (String)request.getParameter("deviceip");
-	String deviceip = "192.168.1.100";  //just for test
+	String deviceip = (String)request.getParameter("deviceip");
+	
 %>
 
 <html>
@@ -149,10 +149,10 @@ body{
 				</tr>
 			    <tr>
 					<td width="20%" align="right">
-						<span class=s>*</span>端口:
+						端口:
 					</td>
 					<td width="30%">
-						<input id="port" name="bean.port" class="easyui-validatebox" type="text" data-options="required:true" style="width: 100%;"/>
+						<input id="port" name="bean.port" class="easyui-validatebox" type="text" style="width: 100%;"/>
 					</td>
 					<td colspan="2">
 						&nbsp;
@@ -171,10 +171,10 @@ body{
 				</tr>
 			    <tr>
 					<td width="20%" align="right">
-						远端端口:
+						<span class=s>*</span>远端端口:
 					</td>
 					<td width="30%">
-						<input id="remotePort" name="bean.remotePort" class="easyui-validatebox" type="text" data-options="required:false" style="width: 100%;"/>
+						<input id="remotePort" name="bean.remotePort" class="easyui-validatebox" type="text" data-options="required:true" style="width: 100%;"/>
 					</td>
 					<td colspan="2">
 						&nbsp;
