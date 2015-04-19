@@ -81,7 +81,7 @@ $(document).ready(function(){
 	$('#btnQuery').bind('click', function(){
 		alert("tt");
 		var direction = $("#direction").combobox('getValue');
-		var params = { 'bean.direction': direction, 'bean.deviceip': deviceip}
+		var params = { 'bean.direction': 'direction', 'bean.deviceip': '<%=deviceip%>'}
 		alert(params);
 		//获取默认策略
 		$.ajax({
@@ -90,6 +90,7 @@ $(document).ready(function(){
 					data: params,
 					dataType: 'text',
 					success:function(data, textStatus) {
+						var iii=0;
 						$("#defaultpolicy").text(data);
 					},
 					error:function() { 

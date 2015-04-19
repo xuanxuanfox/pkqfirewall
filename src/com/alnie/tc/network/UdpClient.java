@@ -15,18 +15,15 @@ public class UdpClient {
 		String strReceive = null;
 		s = new DatagramSocket();
 		s.setSoTimeout(TIMEOUT);
-		byte[] buffer = new byte[256];
-
-		buffer = strSend.getBytes();
-		System.out.println(strSend);
-		int len = buffer.length;
+		int lenRecv = 10240;
+		byte[] buffer = strSend.getBytes();
 		InetAddress ia = InetAddress.getByName(host);
-		DatagramPacket dgp = new DatagramPacket(buffer, len, ia, port);
+		DatagramPacket dgp = new DatagramPacket(buffer, buffer.length, ia, port);
 		s.send(dgp);
-		DatagramPacket receivePacket = new DatagramPacket(new byte[len], len);
+		DatagramPacket receivePacket = new DatagramPacket(new byte[lenRecv], lenRecv);
 		s.receive(receivePacket);
 		bufferReceive = receivePacket.getData();
-		strReceive = new String(bufferReceive);
+		strReceive = new String(bufferReceive,0,receivePacket.getLength());
 		if (s != null) {
 			s.close();
 		}

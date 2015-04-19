@@ -30,13 +30,13 @@ import com.ibatis.sqlmap.client.SqlMapSession;
 public class RuleService  extends BaseService{
 	public PageData List(Page page,HashMap baseMap)throws Exception{
 		PageData pageData=null;
+		List<Map<String, Object>> resultList= new ArrayList<Map<String, Object>>();
 		try {
 			//if(baseMap==null)baseMap=new HashMap();
 			//baseMap.put("start_row", page.getStart());
 			//baseMap.put("end_row", page.getLimit());
 			//List<Map<String, Object>> resultList= (List)this.getSqlMapClientTemplate().queryForList("Rule.list",baseMap);
 			//改为从主机代理获取
-			List<Map<String, Object>> resultList= new ArrayList<Map<String, Object>>();
 			String hostIp=(String)baseMap.get("ip");
 			String  direction = (String)baseMap.get("direction");
 			GetRulesRequest request = new GetRulesRequest();
@@ -59,7 +59,7 @@ public class RuleService  extends BaseService{
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e.getMessage(), e);
-			pageData=new PageData(0,null);
+			pageData=new PageData(0,resultList);
 		}finally{
 
 		}
