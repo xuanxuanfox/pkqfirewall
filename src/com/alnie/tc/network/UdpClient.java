@@ -20,20 +20,28 @@ public class UdpClient {
 		String strReceive = null;
 		s = new DatagramSocket();
 		s.setSoTimeout(TIMEOUT);
-		int lenRecv = 10240;
+		int maxLenRecvBuffer = 10240;  //最大接收数据大小，最大为1也50(pageSize)条策略
+		int lenReceived;
 		byte[] buffer = strSend.getBytes();
+		StringBuffer sb = new StringBuffer();
 		InetAddress ia = InetAddress.getByName(host);
 		logger.debug("UdpClient send:" + strSend);
 		DatagramPacket dgp = new DatagramPacket(buffer, buffer.length, ia, port);
 		s.send(dgp);
-		DatagramPacket receivePacket = new DatagramPacket(new byte[lenRecv], lenRecv);
-		s.receive(receivePacket);
-		bufferReceive = receivePacket.getData();
-		strReceive = new String(bufferReceive,0,receivePacket.getLength());
-		logger.debug("UdpClient recv:" + strReceive);
+		DatagramPacket receivePacket = new DatagramPacket(new byte[maxLenRecvBuffer], maxLenRecvBuffer);
+		//do{
+			s.receive(receivePacket);
+			bufferReceive = receivePacket.getData();
+			lenReceived = receivePacket.getLength();
+			strReceive = new String(bufferReceive,0,lenReceived);
+			sb.append(strReceive);
+		//}
+		//while(lenReceived==maxLenRecvBuffer);
+		
+		logger.debug("UdpClient recv:" + sb.toString());
 		if (s != null) {
 			s.close();
 		}
-		return strReceive;
+		return sb.toString();
 	}
 }

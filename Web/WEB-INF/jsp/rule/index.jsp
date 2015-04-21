@@ -41,6 +41,22 @@ $(document).ready(function(){
 	 if (data.length > 0) {
        $('#direction').combobox('select',data[0].value);
      }
+     //获取默认策略
+		var direction = $("#direction").combobox('getValue');
+		var params = { 'bean.direction': direction, 'bean.deviceip': '<%=deviceip%>'};
+		$.ajax({
+					type: 'post',
+					url: RootPath+'/rule/getDefaultRule.action',
+					data: params,
+					dataType: 'json',
+					success:function(data, textStatus) {
+						$("#defaultpolicy").text(data.result_msg);
+					},
+					error:function() { 
+						$("#defaultpolicy").text("");  //如果获取默认策略失败
+					}
+		});
+     
 	$('#dg').datagrid({
 		title:'策略列表',
 	    url:RootPath+'/rule/list.action',
@@ -80,21 +96,20 @@ $(document).ready(function(){
 	
 	$('#btnQuery').bind('click', function(){
 		var direction = $("#direction").combobox('getValue');
-		var params = { 'bean.direction': 'direction', 'bean.deviceip': '<%=deviceip%>'}
+		var params = { 'bean.direction': direction, 'bean.deviceip': '<%=deviceip%>'};
 		//获取默认策略
 		$.ajax({
 					type: 'post',
 					url: RootPath+'/rule/getDefaultRule.action',
 					data: params,
-					dataType: 'text',
+					dataType: 'json',
 					success:function(data, textStatus) {
-						var iii=0;
-						$("#defaultpolicy").text(data);
+						$("#defaultpolicy").text(data.result_msg);
 					},
 					error:function() { 
 						$("#defaultpolicy").text("");  //如果获取默认策略失败
 					}
-		})
+		});
 		$('#dg').datagrid('load', {
 			'bean.ip': $("#deviceip").text(),'bean.direction': direction
 		});

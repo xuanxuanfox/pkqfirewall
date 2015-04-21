@@ -141,7 +141,8 @@ public class RuleService  extends BaseService{
 	    request.setHost(hostIp);
 	    request.setDirection((String)baseMap.get("direction"));
 		try {
-		GetDefaultRuleResponse response = NetworkOp.getDefaultRule(request);
+			GetDefaultRuleResponse response = NetworkOp.getDefaultRule(request);
+			result.setResult_msg(response.getPolicy());  //把默认策略值放到setResult_msg属性里面
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e.getMessage(), e);
