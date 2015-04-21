@@ -54,7 +54,7 @@ public class RuleService  extends BaseService{
 				resultList.add(bm);
 			}
 			//转换成页面显示所要的格式
-			int total_size=response.getRules().size();
+			int total_size=response.getTotal();
 			pageData=new PageData(total_size,resultList);
 		} catch (Exception e) {
 			e.printStackTrace();

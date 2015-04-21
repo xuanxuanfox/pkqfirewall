@@ -69,7 +69,7 @@ $(document).ready(function(){
 	    fit: true,
 	    singleSelect: true,
 		loadMsg:'数据加载中，请稍候...',
-		pageSize:'50',
+		pageSize:'10',
 		pagination: true,
 		rownumbers: true,
 		pagination:true,
