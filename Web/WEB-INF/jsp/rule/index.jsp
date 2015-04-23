@@ -75,7 +75,7 @@ $(document).ready(function(){
 		pagination:true,
 		pageList:[10,20,30,40,50,200],
 	    columns:[[
-	        {field:'direction',title: '方向',width: 10,align:'left'},
+	        
 	        {field:'action',title: 'action',width: 10,align:'left'},
 	        {field:'protocol',title:'协议',width:10,align:'left'},
 	        {field:'port',title:'端口',width:10,align:'left'},

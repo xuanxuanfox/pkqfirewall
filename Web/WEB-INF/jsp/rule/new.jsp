@@ -149,7 +149,7 @@ body{
 				</tr>
 			    <tr>
 					<td width="20%" align="right">
-						端口:
+						源端口:
 					</td>
 					<td width="30%">
 						<input id="port" name="bean.port" class="easyui-validatebox" type="text" style="width: 100%;"/>
@@ -170,8 +170,8 @@ body{
 					</td>
 				</tr>
 			    <tr>
-					<td width="20%" align="right">
-						<span class=s>*</span>远端端口:
+					<td width="25%" align="right">
+						<span class=s>*</span>目的端口:
 					</td>
 					<td width="30%">
 						<input id="remotePort" name="bean.remotePort" class="easyui-validatebox" type="text" data-options="required:true" style="width: 100%;"/>
