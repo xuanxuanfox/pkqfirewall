@@ -52,6 +52,7 @@ public class Constants {
     public static final String TABLE_ROW_FLAG = new String(ALINE); //表格控件记录分割符
     public static final String TABLE_NEWROW_FLAG = new String(ANEWLINE); //表格控件记录分割符
     
+	public final static String URL_ROOT="URL_ROOT";
 	public final static String ANNEX_PATH="ANNEX_PATH";
     public final static String EXPORT_PATH = "EXPORT_PATH";
     public final static String UPLOAD_PATH = "UPLOAD_PATH";

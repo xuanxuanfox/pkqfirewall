@@ -23,6 +23,13 @@
     		insert into rule(content,devices,status)
     		values(#content#,#devices#,#status#)
     	</insert>
+    	<insert id="newAgentVersion" parameterClass="java.util.HashMap">
+    		INSERT INTO agentVersion(ostype,versionIndex,version,downUrl,flag)
+    		values(#ostype#,#versionIndex#,#version#,#downUrl#,'new')
+    	</insert>
+    	<update id="UpdateAgentVersion" parameterClass="java.util.HashMap">
+			update agentVersion set flag='old' where ostype=#ostype#
+		</update>
     	<update id="mod" parameterClass="java.util.HashMap">
 			update rule set content=#content#,devices=#devices#,status=#status#
 		</update>

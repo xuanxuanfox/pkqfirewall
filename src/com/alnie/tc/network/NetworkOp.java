@@ -10,6 +10,7 @@ import com.pkq.firewall.message.request.AddRuleRequest;
 import com.pkq.firewall.message.request.DeleteRuleRequest;
 import com.pkq.firewall.message.request.GetDefaultRuleRequest;
 import com.pkq.firewall.message.request.GetRulesRequest;
+import com.pkq.firewall.message.request.UpdateRequest;
 import com.pkq.firewall.message.response.Response;
 import com.pkq.firewall.message.response.GetRulesResponse;
 import com.pkq.firewall.message.response.GetDefaultRuleResponse;
@@ -75,4 +76,13 @@ public class NetworkOp {
 		//end just for test		
 		return response;
 	}
+	
+	public static Response updateAgent(UpdateRequest req) throws Exception{
+		Response response = new Response();
+		
+		//读取数据库中的资源数据，往其发送更新信息
+				
+		return response;
+	}
+
 }

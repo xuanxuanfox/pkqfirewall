@@ -78,9 +78,9 @@ $(document).ready(function(){
 	        
 	        {field:'action',title: 'action',width: 10,align:'left'},
 	        {field:'protocol',title:'协议',width:10,align:'left'},
-	        {field:'port',title:'端口',width:10,align:'left'},
+	        {field:'remotePort',title:'目的端口',width:10,align:'left'},
 	        {field:'remoteIp',title:'远端ip',width:20,align:'left'},
-	        {field:'remotePort',title:'远端端口',width:10,align:'left'}
+	        {field:'port',title:'源端口',width:10,align:'left'}
 	    ]],
 	    onLoadSuccess:function(bb){
 	    	if(bb.result_code!=undefined)showMsg('加载出错，请与管理员联系！');

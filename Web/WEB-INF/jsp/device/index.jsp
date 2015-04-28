@@ -32,7 +32,8 @@
 		<a href="#" id="btnEdit" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true,disabled:true">修改</a>
 		<a href="#" id="btnRemove" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true,disabled:true">删除</a>
 		<a href="#" id="btnDet" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true,disabled:true">明细</a>
-		<a href="#" id="btnShowFirewallRole" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true,disabled:true">查看策略</a>
+		<a href="#" id="btnShowFirewallRole" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true,disabled:true">查看策略</a>
+		<a href="#" id="btnUpdateAgent" class="easyui-linkbutton" data-options="iconCls:'icon-sum',plain:true,disabled:false">更新代理</a>
 	</div>
 </div>
 <div id="win" class="easyui-window" data-options="closed:true"></div>
@@ -101,6 +102,18 @@ $(document).ready(function(){
 	    var rows = $('#dg').datagrid('getSelections');
 	    var url = "/rule/index.action?deviceip="+rows[0].ip;
 	    openwin({url:url,title:"防火墙策略",width:800,height:350,fit:false});
+	    
+	});
+
+
+	$('#btnUpdateAgent').bind('click', function() {
+	 	var url = "/rule/updateAgentIndex.action";
+	 	var rows = $('#dg').datagrid('getSelections');
+	 	if(rows.length>0){
+			var ip = rows[0].ip;
+			url = url + "?deviceip=" + ip;
+		}
+	    openwin({url:url,title:"更新代理",width:800,height:350,fit:false});
 	    
 	});
 	  

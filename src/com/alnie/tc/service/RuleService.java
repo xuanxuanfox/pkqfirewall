@@ -13,6 +13,7 @@ import com.pkq.firewall.message.request.AddRuleRequest;
 import com.pkq.firewall.message.request.DeleteRuleRequest;
 import com.pkq.firewall.message.request.GetDefaultRuleRequest;
 import com.pkq.firewall.message.request.GetRulesRequest;
+import com.pkq.firewall.message.request.UpdateRequest;
 import com.pkq.firewall.message.response.GetDefaultRuleResponse;
 import com.pkq.firewall.message.response.GetRulesResponse;
 import com.pkq.firewall.message.response.Response;
@@ -21,10 +22,13 @@ import com.alnie.tc.network.NetworkOp;
 import com.alnie.tc.po.AjaxResult;
 import com.alnie.tc.po.Page;
 import com.alnie.tc.po.PageData;
+import com.alnie.tc.po.UploadInfo;
 
 import com.alnie.tc.po.SysLogs;
 import com.alnie.tc.system.common.BaseService;
 import com.alnie.tc.system.common.Constants;
+import com.alnie.tc.system.utils.CommonUtil;
+import com.alnie.tc.system.utils.UploadUtil;
 import com.ibatis.sqlmap.client.SqlMapSession;
 
 public class RuleService  extends BaseService{
@@ -151,5 +155,46 @@ public class RuleService  extends BaseService{
 		}
 		return result;
 		
+	}
+	
+	public AjaxResult updateAgent(HashMap baseMap,UploadInfo upInfo) throws Exception{
+		AjaxResult result;
+		UploadUtil uu = new UploadUtil(upInfo);
+		uu.setUseStoreName(true);
+		uu.setUploadEncoding("UTF-8");
+		String uploadDir=CommonUtil.GetProConfig(Constants.UPLOAD_PATH);
+		uu.setUploadDir(uploadDir);
+		String upResult = uu.Upload();
+		//上传完后，通知代理更新
+		String urlRoot =CommonUtil.GetProConfig(Constants.URL_ROOT);
+		String filePath =  urlRoot + uploadDir + uu.getUfInfo().getFileFileName();
+		baseMap.put("downUrl", filePath);
+		result = insertUpdateInfoToDb(baseMap);
+		return result;
+	}
+	
+	AjaxResult insertUpdateInfoToDb(HashMap baseMap) throws Exception{
+		Connection conn = null;//conn
+		SqlMapSession session = null;//session
+		String msg = "代理版本："+baseMap.get("version");
+		try {
+			conn = this.getSqlMapClient().getDataSource().getConnection();//conn
+		    conn.setAutoCommit(false);//conn
+		    session = this.getSqlMapClient().openSession(conn);//session
+		    session.insert("Rule.UpdateAgentVersion", baseMap);
+			session.insert("Rule.newAgentVersion", baseMap);
+			session.insert("system.newLog", new SysLogs(Constants.TRANS_LOG_DEVICE,"新增代理版本",msg));
+			conn.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			if(null != conn)conn.rollback();//conn
+			this.getSqlMapClientTemplate().insert("system.newLog",new SysLogs(Constants.TRANS_LOG_DEVICE,0,"新增代理版本",e.getMessage()));
+			return new AjaxResult(AjaxResult.RESULT_CODE_FAIL,e.getMessage());
+		}finally{
+			if(null != session)session.close();//session
+			if(null != conn)conn.close();//conn
+		}
+		return new AjaxResult();
 	}
 }
