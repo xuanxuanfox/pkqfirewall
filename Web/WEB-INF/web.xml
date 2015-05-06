@@ -75,6 +75,10 @@
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
 	
+  <listener>
+  	<listener-class>task.StartOnLoad</listener-class>
+  </listener>
+	
 	<!-- 超时设置 -->
 	<session-config>
   		<session-timeout>300000</session-timeout>

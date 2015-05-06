@@ -61,5 +61,8 @@
 	<classpathentry kind="lib" path="Web/WEB-INF/lib/xerces-2.6.2.jar"/>
 	<classpathentry kind="lib" path="Web/WEB-INF/lib/xml-apis.jar"/>
 	<classpathentry kind="lib" path="Web/WEB-INF/lib/xwork-core-2.2.1.1.jar"/>
+	<classpathentry kind="lib" path="Web/WEB-INF/lib/commons-dbcp-1.4.jar"/>
+	<classpathentry kind="lib" path="Web/WEB-INF/lib/commons-pool-1.6.jar"/>
+	<classpathentry kind="lib" path="Web/WEB-INF/lib/quartz-1.7.3.jar"/>
 	<classpathentry kind="output" path="Web/WEB-INF/classes"/>
 </classpath>

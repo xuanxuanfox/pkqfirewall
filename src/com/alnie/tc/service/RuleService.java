@@ -165,36 +165,14 @@ public class RuleService  extends BaseService{
 		String uploadDir=CommonUtil.GetProConfig(Constants.UPLOAD_PATH);
 		uu.setUploadDir(uploadDir);
 		String upResult = uu.Upload();
-		//上传完后，通知代理更新
+		//上传完后，加入数据库
 		String urlRoot =CommonUtil.GetProConfig(Constants.URL_ROOT);
 		String filePath =  urlRoot + uploadDir + uu.getUfInfo().getFileFileName();
 		baseMap.put("downUrl", filePath);
-		result = insertUpdateInfoToDb(baseMap);
+		AgentService us = new AgentService();
+		result = us.insertUpdateInfoToDb(baseMap);
+		//
 		return result;
 	}
 	
-	AjaxResult insertUpdateInfoToDb(HashMap baseMap) throws Exception{
-		Connection conn = null;//conn
-		SqlMapSession session = null;//session
-		String msg = "代理版本："+baseMap.get("version");
-		try {
-			conn = this.getSqlMapClient().getDataSource().getConnection();//conn
-		    conn.setAutoCommit(false);//conn
-		    session = this.getSqlMapClient().openSession(conn);//session
-		    session.insert("Rule.UpdateAgentVersion", baseMap);
-			session.insert("Rule.newAgentVersion", baseMap);
-			session.insert("system.newLog", new SysLogs(Constants.TRANS_LOG_DEVICE,"新增代理版本",msg));
-			conn.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error(e.getMessage(), e);
-			if(null != conn)conn.rollback();//conn
-			this.getSqlMapClientTemplate().insert("system.newLog",new SysLogs(Constants.TRANS_LOG_DEVICE,0,"新增代理版本",e.getMessage()));
-			return new AjaxResult(AjaxResult.RESULT_CODE_FAIL,e.getMessage());
-		}finally{
-			if(null != session)session.close();//session
-			if(null != conn)conn.close();//conn
-		}
-		return new AjaxResult();
-	}
 }

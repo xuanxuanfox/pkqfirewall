@@ -33,4 +33,5 @@ public class RuleAction extends BaseAction {
 		this.ajaxData = (AjaxResult) this.service.execTrans("updateAgent",getBean(),this.getUf());
 		return AJAXDATA;
 	}
+
 }

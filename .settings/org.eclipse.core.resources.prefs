@@ -1,4 +1,4 @@
-#Fri May 09 12:11:33 CST 2014
+#Sun May 03 11:46:55 CST 2015
 eclipse.preferences.version=1
 encoding//Web/config/db.properties=gbk
 encoding//Web/config/system.properties=UTF-8
@@ -8,4 +8,5 @@ encoding//Web/resources/js/system/center.js=UTF-8
 encoding//Web/resources/js/system/west.js=UTF-8
 encoding//Web/system/stat.jsp=UTF-8
 encoding//src/com/alnie/contract/system/utils/DateUtils.java=UTF-8
+encoding//src/updateagent.properties=UTF-8
 encoding/<project>=UTF-8

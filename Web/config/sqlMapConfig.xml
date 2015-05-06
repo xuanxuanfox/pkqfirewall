@@ -14,4 +14,5 @@
   	<sqlMap resource="com/alnie/tc/sqlmap/checkresult.xml"/>
   	<sqlMap resource="com/alnie/tc/sqlmap/log.xml"/>
   	<sqlMap resource="com/alnie/tc/sqlmap/Rule.xml"/>
+  	<sqlMap resource="com/alnie/tc/sqlmap/agentVersion.xml"/>
 </sqlMapConfig>

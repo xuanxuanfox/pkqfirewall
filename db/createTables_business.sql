@@ -72,7 +72,7 @@ DROP TABLE IF EXISTS `agentVersion`;
 CREATE TABLE `agentVersion` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ostype` varchar(15) DEFAULT NULL COMMENT '操作系统类型',
-  `versionIndex` varchar(255) DEFAULT NULL COMMENT '版本索引',
+  `versionIndex`  int  DEFAULT 0 COMMENT '版本索引',
   `version` tinyint(4) DEFAULT NULL COMMENT '版本好',
   downUrl varchar(256) DEFAULT NULL COMMENT '下载地址',
   `flag` varchar(10) DEFAULT 'new' COMMENT '标识',
