@@ -2,6 +2,7 @@ package com.alnie.tc.network;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.pkq.firewall.model.Rule;
 import com.alnie.tc.system.common.Constants;
@@ -83,6 +84,11 @@ public class NetworkOp {
 		//读取数据库中的资源数据，往其发送更新信息
 				
 		return response;
+	}
+
+	public static void updateAgent(String ip,Map<String, Object> req) throws Exception{
+		String jsonStringSend = JSON.toJSONString(req);
+		UdpClient.sendNoBack(ip, PORT, jsonStringSend);
 	}
 
 }
