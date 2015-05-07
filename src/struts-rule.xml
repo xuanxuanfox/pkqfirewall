@@ -20,6 +20,7 @@
 		<action name="detail" class="RuleAction" method="Det"></action>
 		<action name="getDefaultRule" class="RuleAction" method="getDefaultRule"></action>
 		<action name="updateAgent" class="RuleAction" method="updateAgent"></action>
+		<action name="NotifyUpdateAgent" class="RuleAction" method="notifyUpdateAgent"></action>
 	</package>
 	<!-- 业务级配置 BEGIN -->
 </struts>

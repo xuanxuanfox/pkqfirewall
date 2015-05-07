@@ -34,4 +34,9 @@ public class RuleAction extends BaseAction {
 		return AJAXDATA;
 	}
 
+	public String notifyUpdateAgent() throws Exception {
+		this.ajaxData = (AjaxResult) this.service.execTrans("notifyUpdateAgent",getBean());
+		return AJAXDATA;
+ 
+	}
 }

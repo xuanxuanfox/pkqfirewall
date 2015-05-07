@@ -9,6 +9,9 @@ import java.util.UUID;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+import sun.misc.BASE64Decoder;
+import task.Task;
+
 import com.pkq.firewall.message.request.AddRuleRequest;
 import com.pkq.firewall.message.request.DeleteRuleRequest;
 import com.pkq.firewall.message.request.GetDefaultRuleRequest;
@@ -18,6 +21,7 @@ import com.pkq.firewall.message.response.GetDefaultRuleResponse;
 import com.pkq.firewall.message.response.GetRulesResponse;
 import com.pkq.firewall.message.response.Response;
 import com.pkq.firewall.model.Rule;
+import com.alibaba.fastjson.JSON;
 import com.alnie.tc.network.NetworkOp;
 import com.alnie.tc.po.AjaxResult;
 import com.alnie.tc.po.Page;
@@ -159,20 +163,60 @@ public class RuleService  extends BaseService{
 	
 	public AjaxResult updateAgent(HashMap baseMap,UploadInfo upInfo) throws Exception{
 		AjaxResult result;
+		//--------
+		String strEncode = (String)baseMap.get("updatekey");
+		String jsonString = getFromBASE64(strEncode);
+		Map<String,Object> map = (Map<String,Object>)JSON.parse(jsonString);
+		HashMap hm = mapToHashMap(map);
+		//--------
 		UploadUtil uu = new UploadUtil(upInfo);
 		uu.setUseStoreName(true);
 		uu.setUploadEncoding("UTF-8");
 		String uploadDir=CommonUtil.GetProConfig(Constants.UPLOAD_PATH);
 		uu.setUploadDir(uploadDir);
 		String upResult = uu.Upload();
-		//上传完后，加入数据库
 		String urlRoot =CommonUtil.GetProConfig(Constants.URL_ROOT);
 		String filePath =  urlRoot + uploadDir + uu.getUfInfo().getFileFileName();
-		baseMap.put("downUrl", filePath);
+		//-----
+		//上传完后，加入数据库
+		hm.put("downUrl", filePath);
 		AgentService us = new AgentService();
-		result = us.insertUpdateInfoToDb(baseMap);
+		result = us.insertUpdateInfoToDb(hm);
 		//
 		return result;
 	}
 	
+	public AjaxResult notifyUpdateAgent(HashMap baseMap)throws Exception{
+	    
+		AjaxResult result =  new AjaxResult();
+		Task.notifyNewAgent();
+		return result;
+		
+	}
+
+	/**
+	 * BASE64解码
+	*/
+	public String getFromBASE64(String s) throws Exception{ 
+		if (s == null) return null; 
+		BASE64Decoder decoder = new BASE64Decoder(); 
+		byte[] b = decoder.decodeBuffer(s); 
+		return new String(b); 
+	}
+	
+	/**
+	 * 
+	 * @param paraMap
+	 * @return
+	 */
+	HashMap mapToHashMap(Map<String,Object> paraMap){
+		HashMap hm = new HashMap();
+		for(Map.Entry<String, Object> entry : paraMap.entrySet())    
+			{    
+			    //System.out.println(entry.getKey()+": "+entry.getValue()); 
+			    hm.put(entry.getKey(), entry.getValue());
+			}
+		return hm;
+	}
+
 }

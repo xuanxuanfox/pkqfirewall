@@ -77,16 +77,16 @@ public class NetworkOp {
 		//end just for test		
 		return response;
 	}
-	
-	public static Response updateAgent(UpdateRequest req) throws Exception{
-		Response response = new Response();
-		
-		//读取数据库中的资源数据，往其发送更新信息
-				
-		return response;
-	}
 
-	public static void updateAgent(String ip,Map<String, Object> req) throws Exception{
+	/**
+	 * 想各个设备发送新版本信息
+	 * 设备上的代理程序会根据此消息判断是否要更新
+	 * 如果要更新，则取出消息中的版本下载路径，下载
+	 * @param ip
+	 * @param req
+	 * @throws Exception
+	 */
+	public static void newAgentNotify(String ip,Map<String, Object> req) throws Exception{
 		String jsonStringSend = JSON.toJSONString(req);
 		UdpClient.sendNoBack(ip, PORT, jsonStringSend);
 	}
