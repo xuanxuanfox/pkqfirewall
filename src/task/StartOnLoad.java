@@ -15,7 +15,7 @@ import com.alnie.tc.system.utils.CommonUtil;
 
 public class StartOnLoad implements ServletContextListener {
 	protected static Logger logger = Logger.getLogger(StartOnLoad.class);
-	int UPDATE_AGENT_TIMER;
+	int UPDATE_AGENT_TIMER = 1;
 	Timer timer; 
 	public static final long NO_DELAY = 0;   
 	
@@ -23,9 +23,15 @@ public class StartOnLoad implements ServletContextListener {
 		logger.info( "StartOnLoad..............");
 		//读取配置
 		readConfig();
+		try {
+			Thread.sleep(NO_DELAY,UPDATE_AGENT_TIMER * 1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//启动定时任务
-		timer = new Timer("更新代理通知定时器",true); 
-	     timer.schedule(new Task(), NO_DELAY,UPDATE_AGENT_TIMER * 1000);
+		//timer = new Timer("更新代理通知定时器",true); 
+		//timer.schedule(new Task(), NO_DELAY,UPDATE_AGENT_TIMER * 1000);
 	}
 
 	public void contextDestroyed(ServletContextEvent arg0) {

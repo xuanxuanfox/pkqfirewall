@@ -22,6 +22,12 @@
 		<action name="updateAgent" class="RuleAction" method="updateAgent"></action>
 		<action name="NotifyUpdateAgent" class="RuleAction" method="notifyUpdateAgent"></action>
 	</package>
+	
+	<package name="web-rule-json-nocheck" extends="web-nocheck-ajax" namespace="/rule">
+		<action name="getNewestVersion" class="RuleAction" method="getNewestVersion"></action>
+	</package>
+	
+	
 	<!-- 业务级配置 BEGIN -->
 </struts>
 

@@ -5,13 +5,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimerTask;
 
+import javax.servlet.ServletContext;
+
 import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.alnie.tc.network.NetworkOp;
 import com.alnie.tc.po.Page;
 import com.alnie.tc.po.PageData;
 import com.alnie.tc.service.AgentService;
 import com.alnie.tc.service.DeviceService;
+import com.alnie.tc.service.RuleService;
 import com.pkq.firewall.message.response.Response;
 
 public class Task extends TimerTask {
@@ -22,8 +28,12 @@ public class Task extends TimerTask {
 	}
 
 	static public void notifyNewAgent() {
-		logger.debug("定时任务执行了");
-		AgentService as = new AgentService();
+/*		logger.debug("定时任务执行了");
+		RuleService as = new RuleService();
+		 ServletContext sc = ServletActionContext.getServletContext(); 
+		 ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(sc);
+		RuleService service = (RuleService) ctx.getBean("RuleService");
+
 		DeviceService ds = new DeviceService();
 		PageData newestAgentversions;
 		PageData devices;
@@ -57,7 +67,7 @@ public class Task extends TimerTask {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	/**

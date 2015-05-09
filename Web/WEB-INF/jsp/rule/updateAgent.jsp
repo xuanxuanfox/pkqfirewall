@@ -22,6 +22,7 @@ body{
 		$(document).ready(function(){
 			loading("页面加载中，请稍候...");
 			init();
+			
 		});
 		function init(){
 			closeLoading();
@@ -44,6 +45,14 @@ body{
 			$("#addfrm").form('submit', {
 		        url: RootPath+_url,
 		        onSubmit: function() {
+		        	var files = document.getElementsByName("uf.file");
+		        	for(var i=0; i<files.length; i++) {
+		        		if(null==files[i].value || ""==files[i].value || undefined==files[i].value) {
+		        			showMsg("请选择文件!");
+		        			closeLoading();
+		        			return false;
+		        		}
+		        	}
 		        },
 		        success: function(_data) {
 					var data=jQuery.parseJSON(_data);
@@ -58,7 +67,7 @@ body{
 				error:function(_data) {
 					var data=jQuery.parseJSON(_data);
 					closeLoading();
-					showMsg("操作失败！");
+					showMsg("更新失败！");
 				}
 		    });
 		}
@@ -67,16 +76,28 @@ body{
 		}
 	</script>
 	<body>
-		<form id="addfrm" name="addfrm" method="post">
+		<form id="addfrm" name="addfrm" method="post"  enctype="multipart/form-data">
 			<table style="width: 100%">
 			    <tr>
 					<td width="20%" align="right">
 						<span class=s>*</span>更新密钥:
 					</td>
 					<td width="30%">
-						<input id="ip" name="bean.ip" class="easyui-validatebox" type="text" data-options="required:true" style="width: 100%;"/>
+						<input id="updatekey" name="bean.updatekey" class="easyui-validatebox" type="text" data-options="required:true" style="width: 100%;"/>
 					</td>
 					<td colspan="2">
+						&nbsp;
+					</td>
+				</tr>
+				
+				<tr>
+					<td width="80px" align="right">
+						<span class=s>*</span>agent文件:
+					</td>
+					<td width="60%" colspan="2">
+						<input type="file" name="uf.file" style="width: 100%"/>
+					</td>
+					<td >
 						&nbsp;
 					</td>
 				</tr>

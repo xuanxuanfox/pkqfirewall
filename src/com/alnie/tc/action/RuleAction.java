@@ -1,5 +1,8 @@
 package com.alnie.tc.action;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.alnie.tc.po.AjaxResult;
 import com.alnie.tc.po.PageData;
 import com.alnie.tc.po.UploadInfo;
@@ -30,13 +33,22 @@ public class RuleAction extends BaseAction {
 		return AJAXDATA;
 	}
 	public String updateAgent() throws Exception {
-		this.ajaxData = (AjaxResult) this.service.execTrans("updateAgent",getBean(),this.getUf());
+		UploadInfo uu = this.getUf();
+		Map<String,String> ub = getBean();
+		this.ajaxData = (AjaxResult) this.service.execTrans("updateAgent",ub,uu);
 		return AJAXDATA;
 	}
 
 	public String notifyUpdateAgent() throws Exception {
 		this.ajaxData = (AjaxResult) this.service.execTrans("notifyUpdateAgent",getBean());
 		return AJAXDATA;
- 
+
+		
+		
+	}
+	
+	public String getNewestVersion() throws Exception {
+		this.mapData = (HashMap) this.service.execNoTrans("getNewestVersion",getBean());
+		return MAPDATA;
 	}
 }

@@ -161,6 +161,13 @@ public class RuleService  extends BaseService{
 		
 	}
 	
+	/**
+	 * 接收上传的版本文件，并添加版本信息到数据库中
+	 * @param baseMap
+	 * @param upInfo
+	 * @return
+	 * @throws Exception
+	 */
 	public AjaxResult updateAgent(HashMap baseMap,UploadInfo upInfo) throws Exception{
 		AjaxResult result;
 		//--------
@@ -170,18 +177,23 @@ public class RuleService  extends BaseService{
 		HashMap hm = mapToHashMap(map);
 		//--------
 		UploadUtil uu = new UploadUtil(upInfo);
-		uu.setUseStoreName(true);
+		uu.setUseStoreName(false);
 		uu.setUploadEncoding("UTF-8");
 		String uploadDir=CommonUtil.GetProConfig(Constants.UPLOAD_PATH);
 		uu.setUploadDir(uploadDir);
 		String upResult = uu.Upload();
-		String urlRoot =CommonUtil.GetProConfig(Constants.URL_ROOT);
-		String filePath =  urlRoot + uploadDir + uu.getUfInfo().getFileFileName();
-		//-----
+		
+		//--------------------
+		//文件名，取上传的多个文件中的第一个文件
+		String fileName = uu.getUfInfo().getFileFileName().get(0);
+		//文件绝对路径
+		//String fileRealName=Constants.GetRealPath(uploadDir + (String)uu.getUfInfo().getFileStoreName().get(0));
+		//--------------------
 		//上传完后，加入数据库
-		hm.put("downUrl", filePath);
-		AgentService us = new AgentService();
-		result = us.insertUpdateInfoToDb(hm);
+		String urlRoot =CommonUtil.GetProConfig(Constants.URL_ROOT);
+		String fileURL =  urlRoot + uploadDir + fileName;
+		hm.put("downUrl", fileURL);
+		result = insertUpdateInfoToDb(hm);
 		//
 		return result;
 	}
@@ -189,7 +201,7 @@ public class RuleService  extends BaseService{
 	public AjaxResult notifyUpdateAgent(HashMap baseMap)throws Exception{
 	    
 		AjaxResult result =  new AjaxResult();
-		Task.notifyNewAgent();
+		//Task.notifyNewAgent();
 		return result;
 		
 	}
@@ -219,4 +231,54 @@ public class RuleService  extends BaseService{
 		return hm;
 	}
 
+	
+
+	AjaxResult insertUpdateInfoToDb(HashMap baseMap) throws Exception{
+		Connection conn = null;//conn
+		SqlMapSession session = null;//session
+		String msg = "代理版本："+baseMap.get("version");
+		try {
+			conn = this.getSqlMapClient().getDataSource().getConnection();//conn
+		    conn.setAutoCommit(false);//conn
+		    session = this.getSqlMapClient().openSession(conn);//session
+		    session.update("AgentVersion.updateOld", baseMap);  //先把之前的状态更新为old
+			session.insert("AgentVersion.new", baseMap); //添加新的
+			session.insert("system.newLog", new SysLogs(Constants.TRANS_LOG_DEVICE,"新增代理版本",msg)); //记录日志
+			conn.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			if(null != conn)conn.rollback();//conn
+			this.getSqlMapClientTemplate().insert("system.newLog",new SysLogs(Constants.TRANS_LOG_DEVICE,0,"新增代理版本",e.getMessage()));
+			return new AjaxResult(AjaxResult.RESULT_CODE_FAIL,e.getMessage());
+		}finally{
+			if(null != session)session.close();//session
+			if(null != conn)conn.close();//conn
+		}
+		return new AjaxResult();
+	}
+	
+	
+	public HashMap getNewestVersion(HashMap baseMap)throws Exception{
+		HashMap hm;
+		try {
+			List<Map<String, Object>> resultList= (List)this.getSqlMapClientTemplate().queryForList("AgentVersion.selectNewest",baseMap);
+			int total_size= resultList.size();
+			if(total_size>0){
+				Map<String, Object> newestVersion = resultList.get(0);
+				hm = mapToHashMap(newestVersion);
+			}else{
+				hm =  new HashMap();
+				hm.put("versionIndex", 0); //如果没有最新版本，则设置versionIndex为0
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			throw e;
+		}finally{
+
+		}
+		return hm;
+	}
 }
