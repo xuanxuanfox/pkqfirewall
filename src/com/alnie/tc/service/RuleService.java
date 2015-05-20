@@ -120,8 +120,16 @@ public class RuleService  extends BaseService{
 			DeleteRuleRequest request = new DeleteRuleRequest();
 			String ruleid=baseMap.get("id").toString();
 			String deviceip=baseMap.get("deviceip").toString();
+			String direction=baseMap.get("direction").toString();
+			String protocol=baseMap.get("protocol").toString();
+			String port=baseMap.get("port").toString();
+			
 			request.setHost(deviceip);
 			request.setId(ruleid);
+			request.setDirection(direction);
+			request.setProtocol(protocol);
+			request.setPort(port);
+			
 			Response response = NetworkOp.deleteRule(request);
 			conn = this.getSqlMapClient().getDataSource().getConnection();//conn
 		    conn.setAutoCommit(false);//conn

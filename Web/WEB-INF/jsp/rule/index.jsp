@@ -126,11 +126,13 @@ $(document).ready(function(){
 	  	if(opt.disabled)return;
 	   	$.messager.confirm('删除策略', '确定要删除该策略吗?', function(r){
 			if (r) {
+			var direction = $("#direction").combobox('getValue');
 				var ss = [];
 				var rows = $('#dg').datagrid('getSelections');
+				console.info(rows);
 				var params = {
-					'bean.id':rows[0].id,'bean.deviceip': '<%=deviceip%>'
-				}
+					'bean.id':rows[0].id,'bean.deviceip': '<%=deviceip%>','bean.direction':direction,'bean.protocol':rows[0].protocol,'bean.port':rows[0].remotePort
+				} 
 				$.ajax({
 					type: 'post',
 					url: RootPath+'/rule/saveDel.action',
