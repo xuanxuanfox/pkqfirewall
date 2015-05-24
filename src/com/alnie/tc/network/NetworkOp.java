@@ -18,12 +18,14 @@ import com.pkq.firewall.message.response.GetDefaultRuleResponse;
 
 public class NetworkOp {
 	static int PORT = 7709;
+	//static NetworkClient networkClient = new UdpClient();
+	static NetworkClient networkClient = new TcpClient();
 	
 	public static GetRulesResponse getRules(GetRulesRequest req) throws Exception{
 		GetRulesResponse response = null;
 		
 		String jsonStringSend = JSON.toJSONString(req);
-		String jsonStringReceive = UdpClient.sendAndReceive(req.getHost(),PORT,jsonStringSend);
+		String jsonStringReceive = networkClient.sendAndReceive(req.getHost(),PORT,jsonStringSend);
 		if( jsonStringReceive!=null ){
 			response = JSON.parseObject(jsonStringReceive, GetRulesResponse.class);
 		}
@@ -37,7 +39,7 @@ public class NetworkOp {
 		Response response = null;
 		
 		String jsonStringSend = JSON.toJSONString(req);
-		String jsonStringReceive = UdpClient.sendAndReceive(req.getHost(),PORT,jsonStringSend);
+		String jsonStringReceive = networkClient.sendAndReceive(req.getHost(),PORT,jsonStringSend);
 		if( jsonStringReceive!=null ){
 			response = JSON.parseObject(jsonStringReceive, Response.class);
 		}
@@ -52,7 +54,7 @@ public class NetworkOp {
 		Response response = null;
 		
 		String jsonStringSend = JSON.toJSONString(req);
-		String jsonStringReceive = UdpClient.sendAndReceive(req.getHost(),PORT,jsonStringSend);
+		String jsonStringReceive = networkClient.sendAndReceive(req.getHost(),PORT,jsonStringSend);
 		if( jsonStringReceive!=null ){
 			response = JSON.parseObject(jsonStringReceive, Response.class);
 		}
@@ -67,7 +69,7 @@ public class NetworkOp {
 		GetDefaultRuleResponse response = null;
 		
 		String jsonStringSend = JSON.toJSONString(req);
-		String jsonStringReceive = UdpClient.sendAndReceive(req.getHost(),PORT,jsonStringSend);
+		String jsonStringReceive = networkClient.sendAndReceive(req.getHost(),PORT,jsonStringSend);
 		if( jsonStringReceive!=null ){
 			response = JSON.parseObject(jsonStringReceive, GetDefaultRuleResponse.class);
 		}
@@ -88,7 +90,7 @@ public class NetworkOp {
 	 */
 	public static void newAgentNotify(String ip,Map<String, Object> req) throws Exception{
 		String jsonStringSend = JSON.toJSONString(req);
-		UdpClient.sendNoBack(ip, PORT, jsonStringSend);
+		networkClient.sendNoBack(ip, PORT, jsonStringSend);
 	}
 
 }

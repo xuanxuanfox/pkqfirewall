@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.alnie.tc.system.common.BaseService;
 
-public class UdpClient {
+public class UdpClient implements NetworkClient{
 	static int TIMEOUT = 5000;
 	static Logger logger = Logger.getLogger(UdpClient.class);
 	
@@ -20,7 +20,7 @@ public class UdpClient {
 	 * @param strSend 要发送的消息
 	 * @throws Exception
 	 */
-	static void sendNoBack(String host, int port, String strSend) throws Exception{
+	public void sendNoBack(String host, int port, String strSend) throws Exception{
 		DatagramSocket s = null;
 		byte[] bufferReceive = null;
 		String strReceive = null;
@@ -42,7 +42,7 @@ public class UdpClient {
 	 * @return 接收到的消息
 	 * @throws Exception
 	 */
-	static String sendAndReceive(String host, int port, String strSend)
+	public String sendAndReceive(String host, int port, String strSend)
 			throws Exception {
 		DatagramSocket s = null;
 		byte[] bufferReceive = null;
