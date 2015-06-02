@@ -34,7 +34,6 @@
 		<a href="#" id="btnDet" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true,disabled:true">明细</a>
 		<a href="#" id="btnShowFirewallRole" class="easyui-linkbutton" data-options="iconCls:'icon-tip',plain:true,disabled:true">查看策略</a>
 		<a href="#" id="btnAddNewAgentVersion" class="easyui-linkbutton" data-options="iconCls:'icon-sum',plain:true,disabled:false">添加新版本</a>
-		<a href="#" id="btnNotifyUpdateAgent" class="easyui-linkbutton" data-options="iconCls:'icon-sum',plain:true,disabled:false">更新代理</a>
 	</div>
 </div>
 <div id="win" class="easyui-window" data-options="closed:true"></div>
@@ -114,7 +113,7 @@ $(document).ready(function(){
 	
 	$('#btnAddNewAgentVersion').bind('click', function() {
 	 	var url = "/rule/updateAgentIndex.action";
-	    openwin({url:url,title:"添加代理",width:800,height:350,fit:false});
+	    openwin({url:url,title:"添加新版本",width:800,height:350,fit:false});
 	    
 	});
 	  
